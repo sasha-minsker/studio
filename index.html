@@ -24,55 +24,70 @@
         box-shadow: 0 4px 8px rgba(148, 64, 255, 0.09);
       }
 
-      /* Градиент у слова Studio при наведении на весь заголовок */
-      .heading:hover .studio-word {
+      .studio-word {
+        transition: all 0.6s ease;
+        color: #1f2937; /* gray-800 */
+      }
+
+      .studio-word.gradient {
         background-image: linear-gradient(to right, #06b6d4, #8b5cf6, #ec4899);
         background-clip: text;
         -webkit-background-clip: text;
         color: transparent;
       }
-
-      .studio-word {
-        color: #1f2937; /* text-gray-800 */
-        transition: all 0.5s ease;
-      }
     </style>
   </head>
 
-  <body class="min-h-screen flex flex-col items-center pt-[10vh] px-4 text-gray-800">
-    <!-- Заголовок -->
-    <h1 class="heading text-4xl font-bold text-center mb-0">
-      Sasha Minsker
-      <span class="studio-word"> Studio</span>
-    </h1>
+  <body class="min-h-screen flex flex-col">
+    <!-- Иконка звука -->
+    <button id="sound-toggle" aria-label="Включить звук" class="absolute top-4 right-4 p-2 rounded-full bg-white shadow hover:shadow-md transition hover:scale-105 z-50" title="AI-звук">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-6 h-6 text-gray-700" id="sound-icon">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 14v2m7.07-9.07l-1.41-1.41m-11.32 0L4.93 12m13.14 0l1.41 1.41M4.93 12l1.41-1.41M19 12a7 7 0 11-14 0 7 7 0 0114 0z"/>
+      </svg>
+    </button>
 
-    <!-- Блок с плитками -->
-    <div class="mt-[10vh] grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8 w-full max-w-screen-md mb-12">
-      <a href="https://docs.google.com/" target="_blank" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition-transform duration-200 flex items-center justify-center text-center text-lg font-medium hover-shadow-color" onmouseover="playHoverSound()">Google Docs</a>
-      <a href="https://drive.google.com/" target="_blank" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition-transform duration-200 flex items-center justify-center text-center text-lg font-medium hover-shadow-color" onmouseover="playHoverSound()">Google Drive</a>
-      <a href="https://mail.google.com/" target="_blank" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition-transform duration-200 flex items-center justify-center text-center text-lg font-medium hover-shadow-color" onmouseover="playHoverSound()">Gmail</a>
-      <a href="https://calendar.google.com/" target="_blank" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition-transform duration-200 flex items-center justify-center text-center text-lg font-medium hover-shadow-color" onmouseover="playHoverSound()">Calendar</a>
-      <a href="https://meet.google.com/" target="_blank" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition-transform duration-200 flex items-center justify-center text-center text-lg font-medium hover-shadow-color" onmouseover="playHoverSound()">Meet</a>
-    </div>
+    <!-- Основной контент -->
+    <main class="flex-grow flex flex-col items-center pt-[10vh] px-4 text-gray-800">
+      <!-- Заголовок -->
+      <h1 class="text-4xl font-bold text-center mb-[10vh]" id="main-heading">
+        Sasha Minsker
+        <span id="studio" class="studio-word"> Studio</span>
+      </h1>
 
-    <!-- Аудио -->
-    <audio id="hover-sound" preload="auto">
-      <source src="https://cdn.pixabay.com/audio/2022/08/30/audio_8ca220f4d1.mp3" type="audio/mpeg" />
-    </audio>
+      <!-- Плитки -->
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8 w-full max-w-screen-md mb-12">
+        <a href="https://docs.google.com/" target="_blank" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition-transform duration-200 flex items-center justify-center text-center text-lg font-medium hover-shadow-color" onmouseover="playHoverSound()">Google Docs</a>
+        <a href="https://drive.google.com/" target="_blank" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition-transform duration-200 flex items-center justify-center text-center text-lg font-medium hover-shadow-color" onmouseover="playHoverSound()">Google Drive</a>
+        <a href="https://mail.google.com/" target="_blank" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition-transform duration-200 flex items-center justify-center text-center text-lg font-medium hover-shadow-color" onmouseover="playHoverSound()">Gmail</a>
+        <a href="https://calendar.google.com/" target="_blank" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition-transform duration-200 flex items-center justify-center text-center text-lg font-medium hover-shadow-color" onmouseover="playHoverSound()">Calendar</a>
+        <a href="https://meet.google.com/" target="_blank" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition-transform duration-200 flex items-center justify-center text-center text-lg font-medium hover-shadow-color" onmouseover="playHoverSound()">Meet</a>
+      </div>
+    </main>
 
     <!-- Футер -->
     <footer class="w-full text-center py-4 text-sm text-gray-400">
       &copy; 2025 Sasha Minsker Studio
     </footer>
 
-    <!-- Скрипт -->
+    <!-- Аудио -->
+    <audio id="hover-sound" preload="auto">
+      <source src="https://cdn.pixabay.com/audio/2022/08/30/audio_8ca220f4d1.mp3" type="audio/mpeg" />
+    </audio>
+
+    <!-- Скрипты -->
     <script>
       let soundEnabled = false;
       const sound = document.getElementById('hover-sound');
+      const icon = document.getElementById('sound-icon');
+      const button = document.getElementById('sound-toggle');
+      const studio = document.getElementById('studio');
+      const heading = document.getElementById('main-heading');
 
-      // Активировать звук после первого клика
-      document.addEventListener('click', () => {
-        soundEnabled = true;
+      // Включение/выключение звука
+      button.addEventListener('click', () => {
+        soundEnabled = !soundEnabled;
+        icon.classList.toggle('text-green-500', soundEnabled);
+        icon.classList.toggle('text-gray-700', !soundEnabled);
       });
 
       function playHoverSound() {
@@ -80,6 +95,14 @@
         sound.currentTime = 0;
         sound.play().catch(() => {});
       }
+
+      // Наведение на заголовок
+      heading.addEventListener('mouseenter', () => {
+        studio.classList.add('gradient');
+      });
+      heading.addEventListener('mouseleave', () => {
+        studio.classList.remove('gradient');
+      });
     </script>
   </body>
 </html>
