@@ -59,53 +59,93 @@
 
     <!-- Тайлы -->
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 w-full max-w-screen-lg mb-12">
-      <!-- Открытые тайлы -->
-      <a href="https://docs.google.com" target="_blank" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color">
-        <span class="w-full h-full flex items-center justify-center">Docs</span>
+      <!-- Всегда доступные -->
+      <a href="https://docs.google.com" target="_blank"
+         class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex
+                items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color">
+        Docs
       </a>
-      <a href="https://drive.google.com" target="_blank" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color">
-        <span class="w-full h-full flex items-center justify-center">Drive</span>
+      <a href="https://drive.google.com" target="_blank"
+         class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex
+                items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color">
+        Drive
       </a>
-      <a href="https://mail.google.com" target="_blank" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color">
-        <span class="w-full h-full flex items-center justify-center">Gmail</span>
+      <a href="https://mail.google.com" target="_blank"
+         class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex
+                items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color">
+        Gmail
       </a>
-      <a href="https://calendar.google.com" target="_blank" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color">
-        <span class="w-full h-full flex items-center justify-center">Calendar</span>
+      <a href="https://calendar.google.com" target="_blank"
+         class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex
+                items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color">
+        Calendar
       </a>
-      <a href="https://meet.google.com" target="_blank" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color">
-        <span class="w-full h-full flex items-center justify-center">Meet</span>
+      <a href="https://meet.google.com" target="_blank"
+         class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex
+                items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color">
+        Meet
       </a>
 
-      <!-- Закрытые тайлы (появятся после входа) -->
-      <a href="#" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized">
-        <span class="w-full h-full flex items-center justify-center">Photos</span>
+      <!-- Скрытые тайлы (только после "входа") -->
+      <a href="https://photos.google.com" target="_blank"
+         class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex
+                items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized"
+         style="display: none;">
+        Photos
       </a>
-      <a href="#" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized">
-        <span class="w-full h-full flex items-center justify-center">Keep</span>
+      <a href="https://keep.google.com" target="_blank"
+         class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex
+                items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized"
+         style="display: none;">
+        Keep
       </a>
-      <a href="#" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized">
-        <span class="w-full h-full flex items-center justify-center">Maps</span>
+      <a href="https://maps.google.com" target="_blank"
+         class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex
+                items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized"
+         style="display: none;">
+        Maps
       </a>
-      <a href="#" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized">
-        <span class="w-full h-full flex items-center justify-center">YouTube</span>
+      <a href="https://youtube.com" target="_blank"
+         class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex
+                items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized"
+         style="display: none;">
+        YouTube
       </a>
-      <a href="#" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized">
-        <span class="w-full h-full flex items-center justify-center">News</span>
+      <a href="https://news.google.com" target="_blank"
+         class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex
+                items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized"
+         style="display: none;">
+        News
       </a>
-      <a href="#" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized">
-        <span class="w-full h-full flex items-center justify-center">Translate</span>
+      <a href="https://translate.google.com" target="_blank"
+         class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex
+                items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized"
+         style="display: none;">
+        Translate
       </a>
-      <a href="#" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized">
-        <span class="w-full h-full flex items-center justify-center">Classroom</span>
+      <a href="https://classroom.google.com" target="_blank"
+         class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex
+                items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized"
+         style="display: none;">
+        Classroom
       </a>
-      <a href="#" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized">
-        <span class="w-full h-full flex items-center justify-center">Contacts</span>
+      <a href="https://contacts.google.com" target="_blank"
+         class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex
+                items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized"
+         style="display: none;">
+        Contacts
       </a>
-      <a href="#" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized">
-        <span class="w-full h-full flex items-center justify-center">Forms</span>
+      <a href="https://forms.google.com" target="_blank"
+         class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex
+                items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized"
+         style="display: none;">
+        Forms
       </a>
-      <a href="#" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized">
-        <span class="w-full h-full flex items-center justify-center">Search</span>
+      <a href="https://google.com" target="_blank"
+         class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex
+                items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized"
+         style="display: none;">
+        Search
       </a>
     </div>
 
@@ -130,7 +170,10 @@
     function simulateLogin() {
       document.getElementById('user-name').classList.remove('hidden');
       document.getElementById('login-button').classList.add('hidden');
-      document.querySelectorAll('.authorized').forEach(el => el.classList.remove('hidden'));
+      document.querySelectorAll('.authorized').forEach(el => {
+        el.classList.remove('hidden');
+        el.style.display = '';
+      });
     }
   </script>
 </body>
