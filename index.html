@@ -12,7 +12,7 @@
         background-color: #f1f3f4;
       }
 
-      /* Цветная тень при наведении (ярче на 50%) */
+      /* Цветная тень при наведении (легкая) */
       .hover-shadow-color:hover {
         box-shadow: 0 4px 8px rgba(0, 207, 255, 0.09);
       }
@@ -24,39 +24,18 @@
       .hover-shadow-color:nth-child(3n):hover {
         box-shadow: 0 4px 8px rgba(148, 64, 255, 0.09);
       }
-
-      /* Цветные буквы в стиле Google */
-      .google-letter:nth-child(1) { color: #4285F4; } /* S */
-      .google-letter:nth-child(2) { color: #EA4335; } /* a */
-      .google-letter:nth-child(3) { color: #FBBC05; } /* s */
-      .google-letter:nth-child(4) { color: #4285F4; } /* h */
-      .google-letter:nth-child(5) { color: #34A853; } /* a */
-      .google-letter:nth-child(6) { color: #000000; } /* space */
-      .google-letter:nth-child(7) { color: #EA4335; } /* M */
-      .google-letter:nth-child(8) { color: #FBBC05; } /* i */
-      .google-letter:nth-child(9) { color: #34A853; } /* n */
-      .google-letter:nth-child(10){ color: #4285F4; } /* s */
-      .google-letter:nth-child(11){ color: #EA4335; } /* k */
-      .google-letter:nth-child(12){ color: #FBBC05; } /* e */
-      .google-letter:nth-child(13){ color: #34A853; } /* r */
-      .google-letter:nth-child(14){ color: #000000; } /* space */
-      .google-letter:nth-child(15){ color: #4285F4; } /* S */
-      .google-letter:nth-child(16){ color: #EA4335; } /* t */
-      .google-letter:nth-child(17){ color: #FBBC05; } /* u */
-      .google-letter:nth-child(18){ color: #34A853; } /* d */
-      .google-letter:nth-child(19){ color: #4285F4; } /* i */
-      .google-letter:nth-child(20){ color: #EA4335; } /* o */
     </style>
   </head>
 
-  <body class="min-h-screen flex flex-col justify-between items-center pt-20 px-4">
+  <body class="min-h-screen flex flex-col justify-between items-center pt-24 px-4">
     <!-- Заголовок -->
-    <h1 class="text-4xl font-bold mb-12 text-center leading-tight">
-      <span class="google-letter">S</span><span class="google-letter">a</span><span class="google-letter">s</span><span class="google-letter">h</span><span class="google-letter">a</span>
-      <span class="google-letter"> </span>
-      <span class="google-letter">M</span><span class="google-letter">i</span><span class="google-letter">n</span><span class="google-letter">s</span><span class="google-letter">k</span><span class="google-letter">e</span><span class="google-letter">r</span>
-      <span class="google-letter"> </span>
-      <span class="google-letter">S</span><span class="google-letter">t</span><span class="google-letter">u</span><span class="google-letter">d</span><span class="google-letter">i</span><span class="google-letter">o</span>
+    <h1 class="text-4xl font-bold mb-12 text-center text-gray-800">
+      Sasha Minsker
+      <span
+        class="text-gray-800 transition-all duration-700 hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-cyan-400 hover:via-purple-500 hover:to-pink-500"
+      >
+        Studio
+      </span>
     </h1>
 
     <!-- Звук -->
@@ -73,7 +52,7 @@
       <a href="https://meet.google.com/" target="_blank" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition-transform duration-200 flex items-center justify-center text-center text-lg text-gray-800 font-medium hover-shadow-color" onmouseover="playHoverSound()">Meet</a>
     </div>
 
-    <!-- Скрипт -->
+    <!-- Звук при наведении -->
     <script>
       const sound = document.getElementById('hover-sound');
       function playHoverSound() {
