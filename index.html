@@ -59,25 +59,24 @@
 
     <!-- Тайлы -->
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 w-full max-w-screen-lg mb-12">
+      <!-- Открытые (всегда видны) -->
+      <a href="#" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color">Docs</a>
+      <a href="#" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color">Drive</a>
+      <a href="#" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color">Gmail</a>
+      <a href="#" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color">Calendar</a>
+      <a href="#" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color">Meet</a>
 
-      <!-- Открытые (доступные всем) -->
-      <a href="#" class="tile">Docs</a>
-      <a href="#" class="tile">Drive</a>
-      <a href="#" class="tile">Gmail</a>
-      <a href="#" class="tile">Calendar</a>
-      <a href="#" class="tile">Meet</a>
-
-      <!-- Закрытые (только после входа) -->
-      <a href="#" class="tile hidden authorized">Photos</a>
-      <a href="#" class="tile hidden authorized">Keep</a>
-      <a href="#" class="tile hidden authorized">Maps</a>
-      <a href="#" class="tile hidden authorized">YouTube</a>
-      <a href="#" class="tile hidden authorized">News</a>
-      <a href="#" class="tile hidden authorized">Translate</a>
-      <a href="#" class="tile hidden authorized">Classroom</a>
-      <a href="#" class="tile hidden authorized">Contacts</a>
-      <a href="#" class="tile hidden authorized">Forms</a>
-      <a href="#" class="tile hidden authorized">Search</a>
+      <!-- Закрытые (видны только после входа) -->
+      <a href="#" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized">Photos</a>
+      <a href="#" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized">Keep</a>
+      <a href="#" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized">Maps</a>
+      <a href="#" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized">YouTube</a>
+      <a href="#" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized">News</a>
+      <a href="#" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized">Translate</a>
+      <a href="#" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized">Classroom</a>
+      <a href="#" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized">Contacts</a>
+      <a href="#" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized">Forms</a>
+      <a href="#" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized">Search</a>
     </div>
 
     <!-- Пустой отступ -->
@@ -89,7 +88,7 @@
     &copy; 2025 Sasha Minsker Studio
   </footer>
 
-  <!-- Скрипты -->
+  <!-- Скрипт -->
   <script>
     // Градиент "Studio"
     const studio = document.getElementById('studio');
@@ -101,18 +100,9 @@
     function simulateLogin() {
       document.getElementById('user-name').classList.remove('hidden');
       document.getElementById('login-button').classList.add('hidden');
-
-      // Показываем авторизованные плитки
       const authorizedTiles = document.querySelectorAll('.authorized');
       authorizedTiles.forEach(tile => tile.classList.remove('hidden'));
     }
   </script>
-
-  <!-- Tailwind shortcut на тайлы -->
-  <style>
-    .tile {
-      @apply aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color;
-    }
-  </style>
 </body>
 </html>
