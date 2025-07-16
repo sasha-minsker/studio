@@ -24,7 +24,7 @@
         box-shadow: 0 4px 8px rgba(148, 64, 255, 0.09);
       }
 
-      /* Градиентное слово Studio при hover */
+      /* Градиент у слова Studio при наведении на весь заголовок */
       .heading:hover .studio-word {
         background-image: linear-gradient(to right, #06b6d4, #8b5cf6, #ec4899);
         background-clip: text;
@@ -33,44 +33,53 @@
       }
 
       .studio-word {
+        color: #1f2937; /* text-gray-800 */
         transition: all 0.5s ease;
       }
     </style>
   </head>
 
-  <body class="min-h-screen flex flex-col justify-between items-center pt-[10vh] px-4">
-    <!-- Заголовок с эффектом на слово Studio -->
-    <h1 class="heading text-4xl font-bold text-center text-gray-800 mb-[10vh]">
+  <body class="min-h-screen flex flex-col items-center pt-[10vh] px-4 text-gray-800">
+    <!-- Заголовок -->
+    <h1 class="heading text-4xl font-bold text-center mb-0">
       Sasha Minsker
-      <span class="studio-word text-gray-800"> Studio</span>
+      <span class="studio-word"> Studio</span>
     </h1>
 
-    <!-- Звук -->
+    <!-- Блок с плитками -->
+    <div class="mt-[10vh] grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8 w-full max-w-screen-md mb-12">
+      <a href="https://docs.google.com/" target="_blank" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition-transform duration-200 flex items-center justify-center text-center text-lg font-medium hover-shadow-color" onmouseover="playHoverSound()">Google Docs</a>
+      <a href="https://drive.google.com/" target="_blank" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition-transform duration-200 flex items-center justify-center text-center text-lg font-medium hover-shadow-color" onmouseover="playHoverSound()">Google Drive</a>
+      <a href="https://mail.google.com/" target="_blank" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition-transform duration-200 flex items-center justify-center text-center text-lg font-medium hover-shadow-color" onmouseover="playHoverSound()">Gmail</a>
+      <a href="https://calendar.google.com/" target="_blank" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition-transform duration-200 flex items-center justify-center text-center text-lg font-medium hover-shadow-color" onmouseover="playHoverSound()">Calendar</a>
+      <a href="https://meet.google.com/" target="_blank" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition-transform duration-200 flex items-center justify-center text-center text-lg font-medium hover-shadow-color" onmouseover="playHoverSound()">Meet</a>
+    </div>
+
+    <!-- Аудио -->
     <audio id="hover-sound" preload="auto">
       <source src="https://cdn.pixabay.com/audio/2022/08/30/audio_8ca220f4d1.mp3" type="audio/mpeg" />
     </audio>
-
-    <!-- Кнопки -->
-    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8 w-full max-w-screen-md mb-12">
-      <a href="https://docs.google.com/" target="_blank" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition-transform duration-200 flex items-center justify-center text-center text-lg text-gray-800 font-medium hover-shadow-color" onmouseover="playHoverSound()">Google Docs</a>
-      <a href="https://drive.google.com/" target="_blank" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition-transform duration-200 flex items-center justify-center text-center text-lg text-gray-800 font-medium hover-shadow-color" onmouseover="playHoverSound()">Google Drive</a>
-      <a href="https://mail.google.com/" target="_blank" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition-transform duration-200 flex items-center justify-center text-center text-lg text-gray-800 font-medium hover-shadow-color" onmouseover="playHoverSound()">Gmail</a>
-      <a href="https://calendar.google.com/" target="_blank" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition-transform duration-200 flex items-center justify-center text-center text-lg text-gray-800 font-medium hover-shadow-color" onmouseover="playHoverSound()">Calendar</a>
-      <a href="https://meet.google.com/" target="_blank" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition-transform duration-200 flex items-center justify-center text-center text-lg text-gray-800 font-medium hover-shadow-color" onmouseover="playHoverSound()">Meet</a>
-    </div>
-
-    <!-- Скрипт -->
-    <script>
-      const sound = document.getElementById('hover-sound');
-      function playHoverSound() {
-        sound.currentTime = 0;
-        sound.play().catch(() => {});
-      }
-    </script>
 
     <!-- Футер -->
     <footer class="w-full text-center py-4 text-sm text-gray-400">
       &copy; 2025 Sasha Minsker Studio
     </footer>
+
+    <!-- Скрипт -->
+    <script>
+      let soundEnabled = false;
+      const sound = document.getElementById('hover-sound');
+
+      // Активировать звук после первого клика
+      document.addEventListener('click', () => {
+        soundEnabled = true;
+      });
+
+      function playHoverSound() {
+        if (!soundEnabled) return;
+        sound.currentTime = 0;
+        sound.play().catch(() => {});
+      }
+    </script>
   </body>
 </html>
