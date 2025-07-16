@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sasha Minsker Studio</title>
+    <title>Sasha Minsker | Launchpad</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -11,53 +11,46 @@
     <style>
       body {
         font-family: 'Roboto', sans-serif;
+        background-image: url('./background.png'); /* заменишь на путь к своей картинке */
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
       }
     </style>
   </head>
-  <body class="bg-[#f1f3f4] min-h-screen flex flex-col items-center justify-start pt-12 px-4">
-    <h1 class="text-3xl font-medium mb-8 text-center text-gray-800">Добро пожаловать</h1>
+  <body class="min-h-screen flex flex-col items-center justify-start pt-12 px-4 bg-black/80 backdrop-blur">
+    <div class="bg-white/80 backdrop-blur-md rounded-2xl px-6 py-4 shadow-lg mb-8">
+      <h1 class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-pink-500 text-center drop-shadow">
+        Sasha Minsker
+      </h1>
+      <p class="text-center text-gray-600 mt-1 text-sm">ИИ для взрослых</p>
+    </div>
 
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 w-full max-w-screen-md">
-      <!-- Кнопка -->
+      <!-- Кнопки -->
       <a
         href="https://docs.google.com/"
         target="_blank"
-        class="aspect-square bg-white rounded-2xl shadow hover:shadow-md transition-shadow flex items-center justify-center text-center text-base text-gray-700 font-medium hover:bg-blue-50"
+        class="aspect-square bg-white rounded-xl shadow hover:shadow-xl transition-shadow flex items-center justify-center text-center text-base text-gray-700 font-medium hover:bg-cyan-100"
       >
         Google Docs
       </a>
-      <a
-        href="https://drive.google.com/"
-        target="_blank"
-        class="aspect-square bg-white rounded-2xl shadow hover:shadow-md transition-shadow flex items-center justify-center text-center text-base text-gray-700 font-medium hover:bg-blue-50"
-      >
+      <a href="https://drive.google.com/" target="_blank" class="aspect-square bg-white rounded-xl shadow hover:shadow-xl transition-shadow flex items-center justify-center text-center text-base text-gray-700 font-medium hover:bg-cyan-100">
         Google Drive
       </a>
-      <a
-        href="https://mail.google.com/"
-        target="_blank"
-        class="aspect-square bg-white rounded-2xl shadow hover:shadow-md transition-shadow flex items-center justify-center text-center text-base text-gray-700 font-medium hover:bg-blue-50"
-      >
+      <a href="https://mail.google.com/" target="_blank" class="aspect-square bg-white rounded-xl shadow hover:shadow-xl transition-shadow flex items-center justify-center text-center text-base text-gray-700 font-medium hover:bg-pink-100">
         Gmail
       </a>
-      <a
-        href="https://calendar.google.com/"
-        target="_blank"
-        class="aspect-square bg-white rounded-2xl shadow hover:shadow-md transition-shadow flex items-center justify-center text-center text-base text-gray-700 font-medium hover:bg-blue-50"
-      >
+      <a href="https://calendar.google.com/" target="_blank" class="aspect-square bg-white rounded-xl shadow hover:shadow-xl transition-shadow flex items-center justify-center text-center text-base text-gray-700 font-medium hover:bg-blue-100">
         Calendar
       </a>
-      <a
-        href="https://meet.google.com/"
-        target="_blank"
-        class="aspect-square bg-white rounded-2xl shadow hover:shadow-md transition-shadow flex items-center justify-center text-center text-base text-gray-700 font-medium hover:bg-blue-50"
-      >
+      <a href="https://meet.google.com/" target="_blank" class="aspect-square bg-white rounded-xl shadow hover:shadow-xl transition-shadow flex items-center justify-center text-center text-base text-gray-700 font-medium hover:bg-indigo-100">
         Meet
       </a>
     </div>
 
-    <footer class="mt-16 text-sm text-gray-400">
-      <p>&copy; 2025 Мой Launchpad</p>
+    <footer class="mt-16 text-sm text-white/70">
+      <p>&copy; 2025 Sasha Minsker | Launchpad</p>
     </footer>
   </body>
 </html>
