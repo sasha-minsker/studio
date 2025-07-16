@@ -59,24 +59,24 @@
 
     <!-- Тайлы -->
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 w-full max-w-screen-lg mb-12">
-      <!-- Открытые (всегда видны) -->
-      <a href="#" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color">Docs</a>
-      <a href="#" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color">Drive</a>
-      <a href="#" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color">Gmail</a>
-      <a href="#" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color">Calendar</a>
-      <a href="#" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color">Meet</a>
+      <!-- Открытые тайлы -->
+      <a href="https://docs.google.com" target="_blank" class="tile"><span>Docs</span></a>
+      <a href="https://drive.google.com" target="_blank" class="tile"><span>Drive</span></a>
+      <a href="https://mail.google.com" target="_blank" class="tile"><span>Gmail</span></a>
+      <a href="https://calendar.google.com" target="_blank" class="tile"><span>Calendar</span></a>
+      <a href="https://meet.google.com" target="_blank" class="tile"><span>Meet</span></a>
 
-      <!-- Закрытые (видны только после входа) -->
-      <a href="#" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized">Photos</a>
-      <a href="#" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized">Keep</a>
-      <a href="#" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized">Maps</a>
-      <a href="#" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized">YouTube</a>
-      <a href="#" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized">News</a>
-      <a href="#" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized">Translate</a>
-      <a href="#" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized">Classroom</a>
-      <a href="#" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized">Contacts</a>
-      <a href="#" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized">Forms</a>
-      <a href="#" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized">Search</a>
+      <!-- Закрытые тайлы -->
+      <a href="#" class="tile hidden authorized"><span>Photos</span></a>
+      <a href="#" class="tile hidden authorized"><span>Keep</span></a>
+      <a href="#" class="tile hidden authorized"><span>Maps</span></a>
+      <a href="#" class="tile hidden authorized"><span>YouTube</span></a>
+      <a href="#" class="tile hidden authorized"><span>News</span></a>
+      <a href="#" class="tile hidden authorized"><span>Translate</span></a>
+      <a href="#" class="tile hidden authorized"><span>Classroom</span></a>
+      <a href="#" class="tile hidden authorized"><span>Contacts</span></a>
+      <a href="#" class="tile hidden authorized"><span>Forms</span></a>
+      <a href="#" class="tile hidden authorized"><span>Search</span></a>
     </div>
 
     <!-- Пустой отступ -->
@@ -90,13 +90,13 @@
 
   <!-- Скрипт -->
   <script>
-    // Градиент "Studio"
+    // Градиент на "Studio"
     const studio = document.getElementById('studio');
     const heading = document.getElementById('main-heading');
     heading.addEventListener('mouseenter', () => studio.classList.add('gradient'));
     heading.addEventListener('mouseleave', () => studio.classList.remove('gradient'));
 
-    // Симулированный вход
+    // Симуляция входа
     function simulateLogin() {
       document.getElementById('user-name').classList.remove('hidden');
       document.getElementById('login-button').classList.add('hidden');
@@ -104,5 +104,41 @@
       authorizedTiles.forEach(tile => tile.classList.remove('hidden'));
     }
   </script>
+
+  <!-- Стили для тайлов -->
+  <style>
+    .tile {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      aspect-ratio: 1 / 1;
+      background-color: white;
+      border-radius: 0.75rem;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+      font-size: 1rem;
+      font-weight: 500;
+      text-align: center;
+      color: #1f2937;
+      transition: transform 0.2s;
+      text-decoration: none;
+    }
+
+    .tile:hover {
+      transform: scale(1.02);
+    }
+
+    .tile span {
+      display: block;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .tile:hover {
+      box-shadow: 0 4px 8px rgba(0, 207, 255, 0.09);
+    }
+  </style>
 </body>
 </html>
