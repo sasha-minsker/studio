@@ -39,17 +39,6 @@
 </head>
 
 <body class="min-h-screen flex flex-col">
-  <!-- AI / ChatGPT-стиль иконка -->
-  <button id="sound-toggle" aria-label="Включить звук"
-    class="absolute top-4 right-4 p-2 rounded-full bg-white shadow hover:shadow-md transition hover:scale-105 z-50"
-    title="AI-звук">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" class="w-6 h-6 text-gray-700"
-      id="sound-icon">
-      <path fill="currentColor"
-        d="M128.6 29a46.2 46.2 0 0 0-50.4 2.8 46.3 46.3 0 0 0-86.8 23v57.5a45.7 45.7 0 0 0 17.1 87.9h4.4v.3a46.3 46.3 0 0 0 72.3 38.8 46.3 46.3 0 0 0 75.6 0 46.3 46.3 0 0 0 72.3-38.8v-7.4a46.2 46.2 0 0 0-15.3-89.7 46.1 46.1 0 0 0-54.2-74.4 45.9 45.9 0 0 0-34.7-1.1Z" />
-    </svg>
-  </button>
-
   <!-- Контент -->
   <main class="flex-grow flex flex-col items-center pt-[10vh] px-4 text-gray-800">
     <!-- Заголовок -->
@@ -60,21 +49,21 @@
 
     <!-- Плитки -->
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 w-full max-w-screen-lg mb-12">
-      <a href="https://docs.google.com/" target="_blank" class="tile">Docs</a>
-      <a href="https://drive.google.com/" target="_blank" class="tile">Drive</a>
-      <a href="https://mail.google.com/" target="_blank" class="tile">Gmail</a>
-      <a href="https://calendar.google.com/" target="_blank" class="tile">Calendar</a>
-      <a href="https://meet.google.com/" target="_blank" class="tile">Meet</a>
-      <a href="https://photos.google.com/" target="_blank" class="tile">Photos</a>
-      <a href="https://keep.google.com/" target="_blank" class="tile">Keep</a>
-      <a href="https://maps.google.com/" target="_blank" class="tile">Maps</a>
-      <a href="https://youtube.com/" target="_blank" class="tile">YouTube</a>
-      <a href="https://news.google.com/" target="_blank" class="tile">News</a>
-      <a href="https://translate.google.com/" target="_blank" class="tile">Translate</a>
-      <a href="https://classroom.google.com/" target="_blank" class="tile">Classroom</a>
-      <a href="https://contacts.google.com/" target="_blank" class="tile">Contacts</a>
-      <a href="https://forms.google.com/" target="_blank" class="tile">Forms</a>
-      <a href="https://www.google.com/search" target="_blank" class="tile">Search</a>
+      <a href="https://docs.google.com/" target="_blank" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color">Docs</a>
+      <a href="https://drive.google.com/" target="_blank" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color">Drive</a>
+      <a href="https://mail.google.com/" target="_blank" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color">Gmail</a>
+      <a href="https://calendar.google.com/" target="_blank" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color">Calendar</a>
+      <a href="https://meet.google.com/" target="_blank" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color">Meet</a>
+      <a href="https://photos.google.com/" target="_blank" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color">Photos</a>
+      <a href="https://keep.google.com/" target="_blank" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color">Keep</a>
+      <a href="https://maps.google.com/" target="_blank" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color">Maps</a>
+      <a href="https://youtube.com/" target="_blank" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color">YouTube</a>
+      <a href="https://news.google.com/" target="_blank" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color">News</a>
+      <a href="https://translate.google.com/" target="_blank" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color">Translate</a>
+      <a href="https://classroom.google.com/" target="_blank" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color">Classroom</a>
+      <a href="https://contacts.google.com/" target="_blank" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color">Contacts</a>
+      <a href="https://forms.google.com/" target="_blank" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color">Forms</a>
+      <a href="https://www.google.com/search" target="_blank" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color">Search</a>
     </div>
   </main>
 
@@ -83,31 +72,10 @@
     &copy; 2025 Sasha Minsker Studio
   </footer>
 
-  <!-- Аудио -->
-  <audio id="hover-sound" preload="auto">
-    <source src="https://cdn.pixabay.com/audio/2023/05/24/audio_93dc615828.mp3" type="audio/mpeg" />
-  </audio>
-
-  <!-- Скрипт -->
+  <!-- Градиент на Studio -->
   <script>
-    let soundEnabled = false;
-    const sound = document.getElementById('hover-sound');
-    const icon = document.getElementById('sound-icon');
-    const button = document.getElementById('sound-toggle');
     const studio = document.getElementById('studio');
     const heading = document.getElementById('main-heading');
-
-    button.addEventListener('click', () => {
-      soundEnabled = !soundEnabled;
-      icon.classList.toggle('text-green-500', soundEnabled);
-      icon.classList.toggle('text-gray-700', !soundEnabled);
-    });
-
-    function playHoverSound() {
-      if (!soundEnabled) return;
-      sound.currentTime = 0;
-      sound.play().catch(() => {});
-    }
 
     heading.addEventListener('mouseenter', () => {
       studio.classList.add('gradient');
@@ -117,12 +85,5 @@
       studio.classList.remove('gradient');
     });
   </script>
-
-  <!-- Tailwind shortcut for плитки -->
-  <style>
-    .tile {
-      @apply aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color;
-    }
-  </style>
 </body>
 </html>
