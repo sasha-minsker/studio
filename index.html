@@ -27,15 +27,12 @@
     </style>
   </head>
 
-  <body class="min-h-screen flex flex-col justify-between items-center pt-24 px-4">
-    <!-- Заголовок -->
-    <h1 class="text-4xl font-bold mb-12 text-center text-gray-800">
-      Sasha Minsker
-      <span
-        class="text-gray-800 transition-all duration-700 hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-cyan-400 hover:via-purple-500 hover:to-pink-500"
-      >
-        Studio
-      </span>
+  <body class="min-h-screen flex flex-col justify-between items-center pt-[20vh] px-4">
+    <!-- Заголовок с эффектом наведения -->
+    <h1
+      class="text-4xl font-bold mb-6 text-center text-gray-800 transition-all duration-700 hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-cyan-400 hover:via-purple-500 hover:to-pink-500"
+    >
+      Sasha Minsker Studio
     </h1>
 
     <!-- Звук -->
@@ -52,7 +49,7 @@
       <a href="https://meet.google.com/" target="_blank" class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition-transform duration-200 flex items-center justify-center text-center text-lg text-gray-800 font-medium hover-shadow-color" onmouseover="playHoverSound()">Meet</a>
     </div>
 
-    <!-- Звук при наведении -->
+    <!-- Скрипт -->
     <script>
       const sound = document.getElementById('hover-sound');
       function playHoverSound() {
