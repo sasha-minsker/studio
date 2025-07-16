@@ -12,7 +12,6 @@
         background-color: #f1f3f4;
       }
 
-      /* Цветная тень при наведении (легкая) */
       .hover-shadow-color:hover {
         box-shadow: 0 4px 8px rgba(0, 207, 255, 0.09);
       }
@@ -24,15 +23,26 @@
       .hover-shadow-color:nth-child(3n):hover {
         box-shadow: 0 4px 8px rgba(148, 64, 255, 0.09);
       }
+
+      /* Градиентное слово Studio при hover */
+      .heading:hover .studio-word {
+        background-image: linear-gradient(to right, #06b6d4, #8b5cf6, #ec4899);
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+      }
+
+      .studio-word {
+        transition: all 0.5s ease;
+      }
     </style>
   </head>
 
-  <body class="min-h-screen flex flex-col justify-between items-center pt-[20vh] px-4">
-    <!-- Заголовок с эффектом наведения -->
-    <h1
-      class="text-4xl font-bold mb-6 text-center text-gray-800 transition-all duration-700 hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-cyan-400 hover:via-purple-500 hover:to-pink-500"
-    >
-      Sasha Minsker Studio
+  <body class="min-h-screen flex flex-col justify-between items-center pt-[10vh] px-4">
+    <!-- Заголовок с эффектом на слово Studio -->
+    <h1 class="heading text-4xl font-bold text-center text-gray-800 mb-[10vh]">
+      Sasha Minsker
+      <span class="studio-word text-gray-800"> Studio</span>
     </h1>
 
     <!-- Звук -->
