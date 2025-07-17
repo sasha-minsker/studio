@@ -34,29 +34,29 @@
       transform: scale(1.05);
     }
     .tile-button:nth-child(5n+1):hover {
-      box-shadow: 0 0 12px rgba(255, 105, 97, 0.4);
+      box-shadow: 0 0 12px rgba(255, 105, 97, 0.3);
     }
     .tile-button:nth-child(5n+2):hover {
-      box-shadow: 0 0 12px rgba(255, 180, 128, 0.4);
+      box-shadow: 0 0 12px rgba(255, 180, 128, 0.3);
     }
     .tile-button:nth-child(5n+3):hover {
-      box-shadow: 0 0 12px rgba(144, 224, 239, 0.4);
+      box-shadow: 0 0 12px rgba(144, 224, 239, 0.3);
     }
     .tile-button:nth-child(5n+4):hover {
-      box-shadow: 0 0 12px rgba(130, 177, 255, 0.4);
+      box-shadow: 0 0 12px rgba(130, 177, 255, 0.3);
     }
     .tile-button:nth-child(5n+5):hover {
-      box-shadow: 0 0 12px rgba(255, 153, 204, 0.4);
+      box-shadow: 0 0 12px rgba(255, 153, 204, 0.3);
     }
     @keyframes fadeIn {
       to {
         opacity: 1;
       }
     }
-    #studio {
-      transition: all 1.2s ease;
+    h1 {
+      transition: all 1s ease;
     }
-    h1:hover #studio {
+    h1.gradient {
       background: linear-gradient(90deg, #f88fa6, #fcbad3, #a2d2ff);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -67,12 +67,16 @@
       transition: fill 0.3s ease, stroke 0.3s ease;
     }
     .icon-button:hover svg.plus {
-      fill: #a4d4ae;
-      stroke: #a4d4ae;
+      fill: #6aaed6;
+      stroke: #6aaed6;
     }
     .icon-button:hover svg.minus {
-      fill: #f7a1c4;
-      stroke: #f7a1c4;
+      fill: #d88ba0;
+      stroke: #d88ba0;
+    }
+    .icon-button:hover svg.circle {
+      fill: #fcbad3;
+      stroke: #fcbad3;
     }
   </style>
 </head>
@@ -88,23 +92,27 @@
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
       </svg>
     </button>
+    <button onclick="downloadCurrentTiles()" class="icon-button" title="Скачать JSON">
+      <svg class="w-6 h-6 triangle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 16l-6-6h12l-6 6z" />
+      </svg>
+    </button>
     <button onclick="resetCustomTiles()" class="icon-button" title="Очистить">
-      <svg class="w-6 h-6 minus" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
+      <svg class="w-6 h-6 circle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <circle cx="12" cy="12" r="10" />
       </svg>
     </button>
   </div>
 
-  <!-- Кнопка авторизации Google -->
   <div id="g_id_signin" class="absolute top-4 right-28"></div>
 
   <main class="flex-grow flex flex-col items-center pt-[10vh] px-4">
-    <h1 class="text-4xl font-bold text-center mb-[10vh] text-gray-800">Sasha Minsker <span class="text-gray-500" id="studio">Studio</span></h1>
+    <h1 id="gradient-title" class="text-4xl font-bold text-center mb-[10vh] text-gray-800 cursor-pointer" onmouseenter="this.classList.add('gradient')">Sasha Minsker Studio</h1>
     <div id="tile-container" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 w-full max-w-screen-lg mb-[20vh] pb-[20vh]"></div>
   </main>
 
-  <footer class="w-full text-center py-4 text-sm text-gray-500 flex justify-center px-4">
-    <span>&copy; 2025 Sasha Minsker Studio — v 0.27</span>
+  <footer class="w-full text-center py-4 text-sm text-gray-500">
+    <span>&copy; 2025 Sasha Minsker Studio v 0.28</span>
   </footer>
 
   <script>
@@ -186,7 +194,17 @@
       document.getElementById('upload-controls').classList.add('hidden');
       document.getElementById('g_id_signin')?.classList?.remove('hidden');
       document.getElementById('logout-popup').style.display = 'none';
+      document.getElementById('gradient-title').classList.remove('gradient');
       renderTiles(defaultTiles);
+    }
+
+    function downloadCurrentTiles() {
+      const tiles = localStorage.getItem('customTiles') || JSON.stringify(defaultTiles);
+      const blob = new Blob([tiles], { type: 'application/json' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'tiles.json';
+      link.click();
     }
 
     window.onload = function () {
