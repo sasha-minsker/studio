@@ -34,19 +34,19 @@
       transform: scale(1.05);
     }
     .tile-button:nth-child(5n+1):hover {
-      box-shadow: 0 0 12px rgba(255, 105, 97, 0.3);
+      box-shadow: 0 0 18px rgba(255, 105, 97, 0.45);
     }
     .tile-button:nth-child(5n+2):hover {
-      box-shadow: 0 0 12px rgba(255, 180, 128, 0.3);
+      box-shadow: 0 0 18px rgba(255, 180, 128, 0.45);
     }
     .tile-button:nth-child(5n+3):hover {
-      box-shadow: 0 0 12px rgba(144, 224, 239, 0.3);
+      box-shadow: 0 0 18px rgba(144, 224, 239, 0.45);
     }
     .tile-button:nth-child(5n+4):hover {
-      box-shadow: 0 0 12px rgba(130, 177, 255, 0.3);
+      box-shadow: 0 0 18px rgba(130, 177, 255, 0.45);
     }
     .tile-button:nth-child(5n+5):hover {
-      box-shadow: 0 0 12px rgba(255, 153, 204, 0.3);
+      box-shadow: 0 0 18px rgba(255, 153, 204, 0.45);
     }
     @keyframes fadeIn {
       to {
@@ -70,18 +70,26 @@
       fill: #6aaed6;
       stroke: #6aaed6;
     }
-    .icon-button:hover svg.minus {
-      fill: #d88ba0;
-      stroke: #d88ba0;
+    .icon-button:hover svg.triangle {
+      fill: #94d3a2;
+      stroke: #94d3a2;
     }
     .icon-button:hover svg.circle {
-      fill: #fcbad3;
-      stroke: #fcbad3;
+      fill: #f8acc8;
+      stroke: #f8acc8;
+    }
+    footer:hover, #user-name:hover {
+      background: linear-gradient(90deg, #f88fa6, #fcbad3, #a2d2ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
   </style>
 </head>
 <body class="min-h-screen flex flex-col">
-  <div id="user-name" class="absolute top-4 right-4 text-sm text-gray-600 hidden cursor-pointer" onmouseenter="showLogout()" onmouseleave="startLogoutTimer()"></div>
+  <div id="user-name" class="absolute top-4 right-4 text-sm text-gray-600 hidden cursor-pointer flex items-center gap-2" onmouseenter="showLogout()" onmouseleave="startLogoutTimer()">
+    <img id="user-pic" class="w-6 h-6 rounded-full hidden" alt="user"/>
+    <span id="user-name-text"></span>
+  </div>
   <div id="logout-popup" onmouseenter="cancelLogoutTimer()" onmouseleave="startLogoutTimer()" onclick="logout()">Log out</div>
 
   <!-- Иконки в левом верхнем углу -->
@@ -93,12 +101,12 @@
       </svg>
     </button>
     <button onclick="downloadCurrentTiles()" class="icon-button" title="Скачать JSON">
-      <svg class="w-6 h-6 triangle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+      <svg class="w-7 h-7 triangle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 16l-6-6h12l-6 6z" />
       </svg>
     </button>
     <button onclick="resetCustomTiles()" class="icon-button" title="Очистить">
-      <svg class="w-6 h-6 circle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <svg class="w-5 h-5 circle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <circle cx="12" cy="12" r="10" />
       </svg>
     </button>
@@ -107,16 +115,32 @@
   <div id="g_id_signin" class="absolute top-4 right-28"></div>
 
   <main class="flex-grow flex flex-col items-center pt-[10vh] px-4">
-    <h1 id="gradient-title" class="text-4xl font-bold text-center mb-[10vh] text-gray-800 cursor-pointer" onmouseenter="this.classList.add('gradient')">Sasha Minsker Studio</h1>
+    <h1 id="gradient-title" class="text-4xl font-bold text-center mb-[10vh] text-gray-800 cursor-pointer"
+        onmouseenter="applyGradient()" onmouseleave="startRevertGradient()">
+      Sasha Minsker Studio
+    </h1>
     <div id="tile-container" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 w-full max-w-screen-lg mb-[20vh] pb-[20vh]"></div>
   </main>
 
   <footer class="w-full text-center py-4 text-sm text-gray-500">
-    <span>&copy; 2025 Sasha Minsker Studio v 0.28</span>
+    <span>&copy; 2025 Sasha Minsker Studio v 0.29</span>
   </footer>
 
   <script>
     let logoutTimer;
+    let revertTimer;
+
+    function applyGradient() {
+      const h1 = document.getElementById('gradient-title');
+      h1.classList.add('gradient');
+      clearTimeout(revertTimer);
+    }
+
+    function startRevertGradient() {
+      revertTimer = setTimeout(() => {
+        document.getElementById('gradient-title').classList.remove('gradient');
+      }, 5000);
+    }
 
     function showLogout() {
       clearTimeout(logoutTimer);
@@ -159,7 +183,7 @@
       const data = parseJwt(response.credential);
       sessionStorage.setItem('user', JSON.stringify(data));
       localStorage.setItem('user', JSON.stringify(data));
-      showUserUI(data.name);
+      showUserUI(data.name, data.picture);
       const storedTiles = localStorage.getItem('customTiles');
       if (storedTiles) {
         try {
@@ -173,8 +197,13 @@
       }
     }
 
-    function showUserUI(name) {
-      document.getElementById('user-name').textContent = name;
+    function showUserUI(name, pictureUrl) {
+      document.getElementById('user-name-text').textContent = name;
+      if (pictureUrl) {
+        const img = document.getElementById('user-pic');
+        img.src = pictureUrl;
+        img.classList.remove('hidden');
+      }
       document.getElementById('user-name').classList.remove('hidden');
       document.getElementById('g_id_signin')?.classList?.add('hidden');
       document.getElementById('upload-controls').classList.remove('hidden');
@@ -211,7 +240,7 @@
       const cachedUser = localStorage.getItem('user') || sessionStorage.getItem('user');
       if (cachedUser) {
         const user = JSON.parse(cachedUser);
-        showUserUI(user.name);
+        showUserUI(user.name, user.picture);
         const storedTiles = localStorage.getItem('customTiles');
         if (storedTiles) {
           try {
