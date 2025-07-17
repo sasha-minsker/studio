@@ -34,19 +34,19 @@
       transform: scale(1.05);
     }
     .tile-button:nth-child(5n+1):hover {
-      box-shadow: 0 0 18px rgba(255, 105, 97, 0.45);
+      box-shadow: 0 0 27px rgba(255, 105, 97, 0.7);
     }
     .tile-button:nth-child(5n+2):hover {
-      box-shadow: 0 0 18px rgba(255, 180, 128, 0.45);
+      box-shadow: 0 0 27px rgba(255, 180, 128, 0.7);
     }
     .tile-button:nth-child(5n+3):hover {
-      box-shadow: 0 0 18px rgba(144, 224, 239, 0.45);
+      box-shadow: 0 0 27px rgba(144, 224, 239, 0.7);
     }
     .tile-button:nth-child(5n+4):hover {
-      box-shadow: 0 0 18px rgba(130, 177, 255, 0.45);
+      box-shadow: 0 0 27px rgba(130, 177, 255, 0.7);
     }
     .tile-button:nth-child(5n+5):hover {
-      box-shadow: 0 0 18px rgba(255, 153, 204, 0.45);
+      box-shadow: 0 0 27px rgba(255, 153, 204, 0.7);
     }
     @keyframes fadeIn {
       to {
@@ -78,7 +78,12 @@
       fill: #f8acc8;
       stroke: #f8acc8;
     }
-    footer:hover, #user-name:hover {
+    footer:hover, #user-pic:hover {
+      background: linear-gradient(90deg, #f88fa6, #fcbad3, #a2d2ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    #logout-popup:hover {
       background: linear-gradient(90deg, #f88fa6, #fcbad3, #a2d2ff);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -87,8 +92,7 @@
 </head>
 <body class="min-h-screen flex flex-col">
   <div id="user-name" class="absolute top-4 right-4 text-sm text-gray-600 hidden cursor-pointer flex items-center gap-2" onmouseenter="showLogout()" onmouseleave="startLogoutTimer()">
-    <img id="user-pic" class="w-6 h-6 rounded-full hidden" alt="user"/>
-    <span id="user-name-text"></span>
+    <img id="user-pic" class="w-8 h-8 rounded-full" alt="user"/>
   </div>
   <div id="logout-popup" onmouseenter="cancelLogoutTimer()" onmouseleave="startLogoutTimer()" onclick="logout()">Log out</div>
 
@@ -101,13 +105,13 @@
       </svg>
     </button>
     <button onclick="downloadCurrentTiles()" class="icon-button" title="Скачать JSON">
-      <svg class="w-7 h-7 triangle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+      <svg class="w-8 h-8 triangle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 16l-6-6h12l-6 6z" />
       </svg>
     </button>
     <button onclick="resetCustomTiles()" class="icon-button" title="Очистить">
       <svg class="w-5 h-5 circle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <circle cx="12" cy="12" r="10" />
+        <rect x="6" y="6" width="12" height="12" rx="2" />
       </svg>
     </button>
   </div>
@@ -123,7 +127,7 @@
   </main>
 
   <footer class="w-full text-center py-4 text-sm text-gray-500">
-    <span>&copy; 2025 Sasha Minsker Studio v 0.29</span>
+    <span>&copy; 2025 Sasha Minsker Studio v 0.30</span>
   </footer>
 
   <script>
@@ -140,149 +144,6 @@
       revertTimer = setTimeout(() => {
         document.getElementById('gradient-title').classList.remove('gradient');
       }, 5000);
-    }
-
-    function showLogout() {
-      clearTimeout(logoutTimer);
-      document.getElementById('logout-popup').style.display = 'block';
-    }
-
-    function startLogoutTimer() {
-      logoutTimer = setTimeout(() => {
-        document.getElementById('logout-popup').style.display = 'none';
-      }, 1000);
-    }
-
-    function cancelLogoutTimer() {
-      clearTimeout(logoutTimer);
-    }
-
-    const defaultTiles = [
-      { title: 'Docs', link: 'https://docs.google.com' },
-      { title: 'Drive', link: 'https://drive.google.com' },
-      { title: 'Gmail', link: 'https://mail.google.com' },
-      { title: 'Calendar', link: 'https://calendar.google.com' },
-      { title: 'Meet', link: 'https://meet.google.com' }
-    ];
-
-    function renderTiles(tiles) {
-      const container = document.getElementById('tile-container');
-      container.innerHTML = '';
-      tiles.forEach((tile, index) => {
-        const a = document.createElement('a');
-        a.href = tile.link;
-        a.target = '_blank';
-        a.className = 'tile-button aspect-square bg-white bg-opacity-90 rounded-xl shadow transition duration-200 flex items-center justify-center text-center text-base font-semibold text-gray-800';
-        a.style.animationDelay = `${index * 100}ms`;
-        a.textContent = tile.title;
-        container.appendChild(a);
-      });
-    }
-
-    function handleCredentialResponse(response) {
-      const data = parseJwt(response.credential);
-      sessionStorage.setItem('user', JSON.stringify(data));
-      localStorage.setItem('user', JSON.stringify(data));
-      showUserUI(data.name, data.picture);
-      const storedTiles = localStorage.getItem('customTiles');
-      if (storedTiles) {
-        try {
-          const parsed = JSON.parse(storedTiles);
-          renderTiles(parsed);
-        } catch (e) {
-          renderTiles(defaultTiles);
-        }
-      } else {
-        renderTiles(defaultTiles);
-      }
-    }
-
-    function showUserUI(name, pictureUrl) {
-      document.getElementById('user-name-text').textContent = name;
-      if (pictureUrl) {
-        const img = document.getElementById('user-pic');
-        img.src = pictureUrl;
-        img.classList.remove('hidden');
-      }
-      document.getElementById('user-name').classList.remove('hidden');
-      document.getElementById('g_id_signin')?.classList?.add('hidden');
-      document.getElementById('upload-controls').classList.remove('hidden');
-    }
-
-    function parseJwt(token) {
-      const base64Url = token.split('.')[1];
-      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-      const jsonPayload = decodeURIComponent(atob(base64).split('').map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join(''));
-      return JSON.parse(jsonPayload);
-    }
-
-    function logout() {
-      sessionStorage.removeItem('user');
-      localStorage.removeItem('user');
-      document.getElementById('user-name').classList.add('hidden');
-      document.getElementById('upload-controls').classList.add('hidden');
-      document.getElementById('g_id_signin')?.classList?.remove('hidden');
-      document.getElementById('logout-popup').style.display = 'none';
-      document.getElementById('gradient-title').classList.remove('gradient');
-      renderTiles(defaultTiles);
-    }
-
-    function downloadCurrentTiles() {
-      const tiles = localStorage.getItem('customTiles') || JSON.stringify(defaultTiles);
-      const blob = new Blob([tiles], { type: 'application/json' });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = 'tiles.json';
-      link.click();
-    }
-
-    window.onload = function () {
-      const cachedUser = localStorage.getItem('user') || sessionStorage.getItem('user');
-      if (cachedUser) {
-        const user = JSON.parse(cachedUser);
-        showUserUI(user.name, user.picture);
-        const storedTiles = localStorage.getItem('customTiles');
-        if (storedTiles) {
-          try {
-            renderTiles(JSON.parse(storedTiles));
-          } catch {
-            renderTiles(defaultTiles);
-          }
-        } else {
-          renderTiles(defaultTiles);
-        }
-        return;
-      }
-      renderTiles(defaultTiles);
-      google.accounts.id.initialize({
-        client_id: "1080259086303-5khq1m64o8g4if6r4088mqsa4pj1s57o.apps.googleusercontent.com",
-        callback: handleCredentialResponse
-      });
-      google.accounts.id.renderButton(
-        document.getElementById("g_id_signin"),
-        { theme: "outline", size: "medium" }
-      );
-    };
-
-    document.getElementById('tileFileInput').addEventListener('change', function(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        try {
-          const data = JSON.parse(e.target.result);
-          localStorage.setItem('customTiles', JSON.stringify(data));
-          renderTiles(data);
-        } catch (err) {
-          alert('Ошибка чтения JSON-файла');
-        }
-      };
-      reader.readAsText(file);
-    });
-
-    function resetCustomTiles() {
-      localStorage.removeItem('customTiles');
-      renderTiles(defaultTiles);
     }
   </script>
 </body>
