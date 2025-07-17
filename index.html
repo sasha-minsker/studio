@@ -1,4 +1,4 @@
-<!-- Version: 0.65 -->
+<!-- Version: v 2025.07.17-05.14 -->
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -64,43 +64,59 @@
     .icon-button svg {
       fill: #444;
       stroke: #444;
-      transition: fill 0.3s ease, stroke 0.3s ease;
+      transition: all 0.3s ease;
     }
     .icon-button:hover svg.square {
       fill: #6aaed6;
       stroke: #6aaed6;
     }
-.icon-button:hover svg.circle {
-  fill: none;
-  stroke: #e57373; /* малиново-красный */
-  box-shadow: 0 0 6px rgba(229, 115, 115, 0.6);
-}
-.icon-button:hover svg.triangle {
-  fill: #90ee90; /* светло-зелёный */
-  stroke: #90ee90;
-}
-
+    .icon-button:hover svg.triangle {
+      fill: #90ee90;
+      stroke: #90ee90;
+    }
+    .icon-button:hover svg.circle {
+      stroke: #ff4f81;
+      filter: drop-shadow(0 0 10px #ff4f81);
+    }
+    .pulse-ring {
+      animation: pulse 1.5s infinite ease-in-out;
+    }
+    @keyframes pulse {
+      0% {
+        stroke-width: 2;
+        filter: drop-shadow(0 0 0px #ff4f81);
+      }
+      50% {
+        stroke-width: 2;
+        filter: drop-shadow(0 0 10px #ff4f81);
+      }
+      100% {
+        stroke-width: 2;
+        filter: drop-shadow(0 0 0px #ff4f81);
+      }
+    }
   </style>
 </head>
 <body class="min-h-screen flex flex-col">
+
   <div id="user-name" class="absolute top-4 right-4 text-sm text-gray-600 hidden cursor-pointer" onmouseenter="showLogout()" onmouseleave="startLogoutTimer()"></div>
   <div id="logout-popup" onmouseenter="cancelLogoutTimer()" onmouseleave="startLogoutTimer()" onclick="logout()">Log out</div>
 
   <div id="upload-controls" class="absolute top-4 left-4 z-50 flex gap-4 hidden">
     <input type="file" id="tileFileInput" accept="application/json" class="hidden">
     <button onclick="document.getElementById('tileFileInput').click()" class="icon-button" title="Загрузить JSON">
-      <svg class="w-6 h-6 square" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+      <svg class="w-6 h-6 square" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
         <rect x="4" y="4" width="16" height="16" rx="2" stroke-width="2" />
       </svg>
     </button>
     <button onclick="downloadCustomTiles()" class="icon-button" title="Скачать JSON">
-      <svg class="w-5 h-5 triangle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M12 22 L2 2 H22 Z" />
+      <svg class="w-5 h-5 triangle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path d="M12 20 L2 4 H22 Z"/>
       </svg>
     </button>
     <button onclick="resetCustomTiles()" class="icon-button" title="Очистить">
-      <svg class="w-5 h-5 circle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
-        <circle cx="12" cy="12" r="10" stroke="#444" stroke-width="2" fill="none"/>
+      <svg class="w-6 h-6 circle pulse-ring" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="10" stroke-width="2" fill="none"/>
       </svg>
     </button>
   </div>
@@ -116,7 +132,7 @@
 
   <footer class="w-full relative py-4 text-sm text-gray-500">
     <div class="text-center">&copy; 2025 Sasha Minsker Studio</div>
-    <div class="absolute right-4 bottom-2">v 0.65</div>
+    <div class="absolute right-4 bottom-2">v 2025.07.17-05.14</div>
   </footer>
 
   <script>
@@ -148,20 +164,6 @@
       });
     }
 
-    function showLogout() {
-      document.getElementById('logout-popup').style.display = 'block';
-    }
-
-    function startLogoutTimer() {
-      logoutTimer = setTimeout(() => {
-        document.getElementById('logout-popup').style.display = 'none';
-      }, 1000);
-    }
-
-    function cancelLogoutTimer() {
-      clearTimeout(logoutTimer);
-    }
-
     function logout() {
       localStorage.clear();
       isLoggedIn = false;
@@ -173,23 +175,15 @@
       document.getElementById('g_id_signin').style.display = 'block';
     }
 
-  function downloadCustomTiles() {
-  const stored = localStorage.getItem('customTiles');
-  if (!stored) {
-    alert('Нет загруженных пользовательских тайлов для скачивания.');
-    return;
-  }
-  try {
-    const tiles = JSON.parse(stored);
-    const blob = new Blob([JSON.stringify(tiles, null, 2)], { type: 'application/json' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = 'tiles.json';
-    link.click();
-  } catch (err) {
-    alert('Ошибка при попытке скачать JSON файл.');
-  }
-}
+    function downloadCustomTiles() {
+      const tiles = JSON.parse(localStorage.getItem('customTiles'));
+      if (!tiles) return;
+      const blob = new Blob([JSON.stringify(tiles, null, 2)], { type: 'application/json' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'tiles.json';
+      link.click();
+    }
 
     function resetCustomTiles() {
       localStorage.removeItem('customTiles');
@@ -277,7 +271,6 @@
       const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
       }).join(''));
-
       return JSON.parse(jsonPayload);
     }
   </script>
