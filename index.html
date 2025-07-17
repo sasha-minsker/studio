@@ -6,6 +6,7 @@
   <title>Sasha Minsker Studio | Launchpad</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <!-- Version: 0.55 -->
   <style>
     body {
       background-color: white;
@@ -29,24 +30,28 @@
       opacity: 0;
       animation: fadeIn 0.6s ease forwards;
       border: 1px solid rgba(0, 0, 0, 0.2);
+      aspect-ratio: 1 / 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     .tile-button:hover {
       transform: scale(1.05);
     }
     .tile-button:nth-child(5n+1):hover {
-      box-shadow: 0 0 12px rgba(255, 105, 97, 0.4);
+      box-shadow: 0 0 12px rgba(255, 105, 97, 0.6);
     }
     .tile-button:nth-child(5n+2):hover {
-      box-shadow: 0 0 12px rgba(255, 180, 128, 0.4);
+      box-shadow: 0 0 12px rgba(255, 180, 128, 0.6);
     }
     .tile-button:nth-child(5n+3):hover {
-      box-shadow: 0 0 12px rgba(144, 224, 239, 0.4);
+      box-shadow: 0 0 12px rgba(144, 224, 239, 0.6);
     }
     .tile-button:nth-child(5n+4):hover {
-      box-shadow: 0 0 12px rgba(130, 177, 255, 0.4);
+      box-shadow: 0 0 12px rgba(130, 177, 255, 0.6);
     }
     .tile-button:nth-child(5n+5):hover {
-      box-shadow: 0 0 12px rgba(255, 153, 204, 0.4);
+      box-shadow: 0 0 12px rgba(255, 153, 204, 0.6);
     }
     @keyframes fadeIn {
       to {
@@ -65,16 +70,16 @@
       transition: fill 0.3s ease, stroke 0.3s ease;
     }
     .icon-button:hover svg.square {
-      fill: #6aaed6;
-      stroke: #6aaed6;
-    }
-    .icon-button:hover svg.circle {
-      fill: #fcbad3;
-      stroke: #fcbad3;
+      fill: #a2d2ff;
+      stroke: #a2d2ff;
     }
     .icon-button:hover svg.triangle {
-      fill: #90e0ef;
-      stroke: #90e0ef;
+      fill: #8bc34a;
+      stroke: #8bc34a;
+    }
+    .icon-button:hover svg.circle {
+      fill: #f88fa6;
+      stroke: #f88fa6;
     }
   </style>
 </head>
