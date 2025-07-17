@@ -34,19 +34,19 @@
       transform: scale(1.05);
     }
     .tile-button:nth-child(5n+1):hover {
-      box-shadow: 0 0 12px rgba(255, 105, 97, 0.4);
+      box-shadow: 0 0 18px rgba(255, 105, 97, 0.6);
     }
     .tile-button:nth-child(5n+2):hover {
-      box-shadow: 0 0 12px rgba(255, 180, 128, 0.4);
+      box-shadow: 0 0 18px rgba(255, 180, 128, 0.6);
     }
     .tile-button:nth-child(5n+3):hover {
-      box-shadow: 0 0 12px rgba(144, 224, 239, 0.4);
+      box-shadow: 0 0 18px rgba(144, 224, 239, 0.6);
     }
     .tile-button:nth-child(5n+4):hover {
-      box-shadow: 0 0 12px rgba(130, 177, 255, 0.4);
+      box-shadow: 0 0 18px rgba(130, 177, 255, 0.6);
     }
     .tile-button:nth-child(5n+5):hover {
-      box-shadow: 0 0 12px rgba(255, 153, 204, 0.4);
+      box-shadow: 0 0 18px rgba(255, 153, 204, 0.6);
     }
     @keyframes fadeIn {
       to {
@@ -69,8 +69,11 @@
       stroke: #6aaed6;
     }
     .icon-button:hover svg.circle {
-      fill: #fcbad3;
-      stroke: #fcbad3;
+      stroke: #f88fa6;
+    }
+    .icon-button:hover svg.triangle {
+      fill: #90ee90;
+      stroke: #90ee90;
     }
   </style>
 </head>
@@ -86,9 +89,14 @@
         <rect x="4" y="4" width="16" height="16" rx="2" stroke-width="2" />
       </svg>
     </button>
+    <button onclick="downloadTilesJson()" class="icon-button" title="Скачать JSON">
+      <svg class="w-6 h-6 triangle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <polygon points="12,16 6,8 18,8" stroke="#444" stroke-width="2" fill="none" />
+      </svg>
+    </button>
     <button onclick="resetCustomTiles()" class="icon-button" title="Очистить">
       <svg class="w-5 h-5 circle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
-        <circle cx="12" cy="12" r="10" stroke="#444" stroke-width="2" fill="none"/>
+        <circle cx="12" cy="12" r="10" stroke="#444" stroke-width="2" fill="none" />
       </svg>
     </button>
   </div>
@@ -96,168 +104,35 @@
   <div id="g_id_signin" class="absolute top-4 right-28"></div>
 
   <main class="flex-grow flex flex-col items-center pt-[10vh] px-4">
-    <h1 id="gradient-title" class="text-4xl font-bold text-center mb-[10vh] text-gray-800 cursor-pointer" onmouseenter="document.getElementById('studio-part').classList.add('gradient-text'); localStorage.setItem('studioGradient', 'true');">
-      Sasha Minsker <span id="studio-part">Studio</span>
+    <h1 id="gradient-title" class="text-4xl font-bold text-center mb-[10vh] text-gray-800 cursor-pointer">
+      <span id="studio-header">Sasha Minsker Studio</span>
     </h1>
     <div id="tile-container" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 w-full max-w-screen-lg mb-[20vh] pb-[20vh]"></div>
   </main>
 
   <footer class="w-full relative py-4 text-sm text-gray-500">
-    <div class="text-center">&copy; 2025 Sasha Minsker Studio</div>
-    <div class="absolute right-4 bottom-2">v 0.40</div>
+    <div class="text-center">© 2025 Sasha Minsker Studio</div>
+    <div class="absolute right-4 bottom-2">v 0.41</div>
   </footer>
 
   <script>
-    let logoutTimer;
-
-    function showLogout() {
-      clearTimeout(logoutTimer);
-      document.getElementById('logout-popup').style.display = 'block';
+    function downloadTilesJson() {
+      const data = localStorage.getItem('customTiles') || JSON.stringify(defaultTiles);
+      const blob = new Blob([data], { type: 'application/json' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'tiles.json';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     }
 
-    function startLogoutTimer() {
-      logoutTimer = setTimeout(() => {
-        document.getElementById('logout-popup').style.display = 'none';
-      }, 1000);
-    }
-
-    function cancelLogoutTimer() {
-      clearTimeout(logoutTimer);
-    }
-
-    const defaultTiles = [
-      { title: 'Docs', link: 'https://docs.google.com' },
-      { title: 'Drive', link: 'https://drive.google.com' },
-      { title: 'Gmail', link: 'https://mail.google.com' },
-      { title: 'Calendar', link: 'https://calendar.google.com' },
-      { title: 'Meet', link: 'https://meet.google.com' }
-    ];
-
-    function renderTiles(tiles) {
-      const container = document.getElementById('tile-container');
-      container.innerHTML = '';
-      tiles.forEach((tile, index) => {
-        const a = document.createElement('a');
-        a.href = tile.link;
-        a.target = '_blank';
-        a.className = 'tile-button aspect-square bg-white bg-opacity-90 rounded-xl shadow transition duration-200 flex items-center justify-center text-center text-base font-semibold text-gray-800';
-        a.style.animationDelay = `${index * 100}ms`;
-        a.textContent = tile.title;
-        container.appendChild(a);
-      });
-    }
-
-    function handleCredentialResponse(response) {
-      const data = parseJwt(response.credential);
-      sessionStorage.setItem('user', JSON.stringify(data));
-      localStorage.setItem('user', JSON.stringify(data));
-      showUserUI(data.name);
-      const storedTiles = localStorage.getItem('customTiles');
-      if (storedTiles) {
-        try {
-          const parsed = JSON.parse(storedTiles);
-          renderTiles(parsed);
-        } catch (e) {
-          renderTiles(defaultTiles);
-        }
-      } else {
-        renderTiles(defaultTiles);
-      }
-    }
-
-    function showUserUI(name) {
-      const cachedUser = JSON.parse(localStorage.getItem('user') || sessionStorage.getItem('user'));
-      if (cachedUser && cachedUser.picture) {
-        const avatar = document.createElement('img');
-        avatar.src = cachedUser.picture;
-        avatar.alt = 'User Avatar';
-        avatar.className = 'w-11 h-11 rounded-full cursor-pointer';
-        avatar.onmouseenter = showLogout;
-        avatar.onmouseleave = startLogoutTimer;
-        const userDiv = document.getElementById('user-name');
-        userDiv.innerHTML = '';
-        userDiv.appendChild(avatar);
-      }
-      document.getElementById('user-name').classList.remove('hidden');
-      document.getElementById('g_id_signin')?.classList?.add('hidden');
-      document.getElementById('upload-controls').classList.remove('hidden');
-    }
-
-    function parseJwt(token) {
-      const base64Url = token.split('.')[1];
-      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-      const jsonPayload = decodeURIComponent(atob(base64).split('').map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join(''));
-      return JSON.parse(jsonPayload);
-    }
-
-    function logout() {
-      sessionStorage.removeItem('user');
-      localStorage.removeItem('user');
-      document.getElementById('user-name').classList.add('hidden');
-      document.getElementById('upload-controls').classList.add('hidden');
-      document.getElementById('g_id_signin')?.classList?.remove('hidden');
-      document.getElementById('logout-popup').style.display = 'none';
-      document.getElementById('gradient-title').classList.remove('gradient');
-      renderTiles(defaultTiles);
-    }
-
-    window.onload = function () {
-      const title = document.getElementById('gradient-title');
-      const studio = document.getElementById('studio-part');
-      title.addEventListener('mouseenter', () => {
-        studio.classList.add('gradient-text');
-        localStorage.setItem('studioGradient', 'true');
-      });
-      if (localStorage.getItem('studioGradient') === 'true') {
-        document.getElementById('studio-part').classList.add('gradient-text');
-      }
-      const cachedUser = localStorage.getItem('user') || sessionStorage.getItem('user');
-      if (cachedUser) {
-        const user = JSON.parse(cachedUser);
-        showUserUI(user.name);
-        const storedTiles = localStorage.getItem('customTiles');
-        if (storedTiles) {
-          try {
-            renderTiles(JSON.parse(storedTiles));
-          } catch {
-            renderTiles(defaultTiles);
-          }
-        } else {
-          renderTiles(defaultTiles);
-        }
-        return;
-      }
-      renderTiles(defaultTiles);
-      google.accounts.id.initialize({
-        client_id: "1080259086303-5khq1m64o8g4if6r4088mqsa4pj1s57o.apps.googleusercontent.com",
-        callback: handleCredentialResponse
-      });
-      google.accounts.id.renderButton(
-        document.getElementById("g_id_signin"),
-        { theme: "outline", size: "medium" }
-      );
-    };
-
-    document.getElementById('tileFileInput').addEventListener('change', function(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        try {
-          const data = JSON.parse(e.target.result);
-          localStorage.setItem('customTiles', JSON.stringify(data));
-          renderTiles(data);
-        } catch (err) {
-          alert('Ошибка чтения JSON-файла');
-        }
-      };
-      reader.readAsText(file);
+    document.getElementById('gradient-title').addEventListener('mouseenter', () => {
+      document.getElementById('studio-header').classList.add('gradient-text');
     });
-
-    function resetCustomTiles() {
-      localStorage.removeItem('customTiles');
-      renderTiles(defaultTiles);
-    }
+    document.getElementById('gradient-title').addEventListener('mouseleave', () => {
+      document.getElementById('studio-header').classList.remove('gradient-text');
+    });
   </script>
 </body>
 </html>
