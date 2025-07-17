@@ -34,46 +34,39 @@
       transform: scale(1.05);
     }
     .tile-button:nth-child(5n+1):hover {
-      box-shadow: 0 0 12px rgba(255, 105, 97, 0.3);
+      box-shadow: 0 0 12px rgba(255, 105, 97, 0.4);
     }
     .tile-button:nth-child(5n+2):hover {
-      box-shadow: 0 0 12px rgba(255, 180, 128, 0.3);
+      box-shadow: 0 0 12px rgba(255, 180, 128, 0.4);
     }
     .tile-button:nth-child(5n+3):hover {
-      box-shadow: 0 0 12px rgba(144, 224, 239, 0.3);
+      box-shadow: 0 0 12px rgba(144, 224, 239, 0.4);
     }
     .tile-button:nth-child(5n+4):hover {
-      box-shadow: 0 0 12px rgba(130, 177, 255, 0.3);
+      box-shadow: 0 0 12px rgba(130, 177, 255, 0.4);
     }
     .tile-button:nth-child(5n+5):hover {
-      box-shadow: 0 0 12px rgba(255, 153, 204, 0.3);
+      box-shadow: 0 0 12px rgba(255, 153, 204, 0.4);
     }
     @keyframes fadeIn {
       to {
         opacity: 1;
       }
     }
-    h1 {
+    .gradient-text {
+      background: linear-gradient(90deg, #f88fa6, #fcbad3, #a2d2ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
       transition: all 1s ease;
     }
-    .gradient-text {
-  background: linear-gradient(90deg, #f88fa6, #fcbad3, #a2d2ff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  transition: all 1s ease;
-}
     .icon-button svg {
       fill: #444;
       stroke: #444;
       transition: fill 0.3s ease, stroke 0.3s ease;
     }
-    .icon-button:hover svg.plus {
+    .icon-button:hover svg.square {
       fill: #6aaed6;
       stroke: #6aaed6;
-    }
-    .icon-button:hover svg.minus {
-      fill: #d88ba0;
-      stroke: #d88ba0;
     }
     .icon-button:hover svg.circle {
       fill: #fcbad3;
@@ -89,15 +82,14 @@
   <div id="upload-controls" class="absolute top-4 left-4 z-50 flex gap-4 hidden">
     <input type="file" id="tileFileInput" accept="application/json" class="hidden">
     <button onclick="document.getElementById('tileFileInput').click()" class="icon-button" title="Загрузить JSON">
-  <svg class="w-6 h-6 square plus" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor">
-  <rect x="4" y="4" width="16" height="16" rx="2" stroke-width="2" />
-</svg>
-</button>
-    
+      <svg class="w-6 h-6 square" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+        <rect x="4" y="4" width="16" height="16" rx="2" stroke-width="2" />
+      </svg>
+    </button>
     <button onclick="resetCustomTiles()" class="icon-button" title="Очистить">
-      <svg class="w-5 h-5 ring minus" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="#d88ba0" fill="none">
-  <circle cx="12" cy="12" r="9" stroke-width="2" />
-</svg>
+      <svg class="w-5 h-5 circle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="10" stroke="#444" stroke-width="2" fill="none"/>
+      </svg>
     </button>
   </div>
 
@@ -105,15 +97,15 @@
 
   <main class="flex-grow flex flex-col items-center pt-[10vh] px-4">
     <h1 id="gradient-title" class="text-4xl font-bold text-center mb-[10vh] text-gray-800 cursor-pointer" onmouseenter="document.getElementById('studio-part').classList.add('gradient-text'); localStorage.setItem('studioGradient', 'true');">
-  Sasha Minsker <span id="studio-part">Studio</span>
-</h1>
+      Sasha Minsker <span id="studio-part">Studio</span>
+    </h1>
     <div id="tile-container" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 w-full max-w-screen-lg mb-[20vh] pb-[20vh]"></div>
   </main>
 
   <footer class="w-full relative py-4 text-sm text-gray-500">
-  <div class="text-center">&copy; 2025 Sasha Minsker Studio</div>
-  <div class="absolute right-4 bottom-2">v 0.39</div>
-</footer>
+    <div class="text-center">&copy; 2025 Sasha Minsker Studio</div>
+    <div class="absolute right-4 bottom-2">v 0.40</div>
+  </footer>
 
   <script>
     let logoutTimer;
@@ -174,22 +166,22 @@
     }
 
     function showUserUI(name) {
-  const cachedUser = JSON.parse(localStorage.getItem('user') || sessionStorage.getItem('user'));
-  if (cachedUser && cachedUser.picture) {
-    const avatar = document.createElement('img');
-    avatar.src = cachedUser.picture;
-    avatar.alt = 'User Avatar';
-    avatar.className = 'w-8 h-8 rounded-full cursor-pointer';
-    avatar.onmouseenter = showLogout;
-    avatar.onmouseleave = startLogoutTimer;
-    const userDiv = document.getElementById('user-name');
-    userDiv.innerHTML = '';
-    userDiv.appendChild(avatar);
-  }
-  document.getElementById('user-name').classList.remove('hidden');
-  document.getElementById('g_id_signin')?.classList?.add('hidden');
-  document.getElementById('upload-controls').classList.remove('hidden');
-}
+      const cachedUser = JSON.parse(localStorage.getItem('user') || sessionStorage.getItem('user'));
+      if (cachedUser && cachedUser.picture) {
+        const avatar = document.createElement('img');
+        avatar.src = cachedUser.picture;
+        avatar.alt = 'User Avatar';
+        avatar.className = 'w-11 h-11 rounded-full cursor-pointer';
+        avatar.onmouseenter = showLogout;
+        avatar.onmouseleave = startLogoutTimer;
+        const userDiv = document.getElementById('user-name');
+        userDiv.innerHTML = '';
+        userDiv.appendChild(avatar);
+      }
+      document.getElementById('user-name').classList.remove('hidden');
+      document.getElementById('g_id_signin')?.classList?.add('hidden');
+      document.getElementById('upload-controls').classList.remove('hidden');
+    }
 
     function parseJwt(token) {
       const base64Url = token.split('.')[1];
@@ -209,24 +201,15 @@
       renderTiles(defaultTiles);
     }
 
-    function downloadCurrentTiles() {
-      const tiles = localStorage.getItem('customTiles') || JSON.stringify(defaultTiles);
-      const blob = new Blob([tiles], { type: 'application/json' });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = 'tiles.json';
-      link.click();
-    }
-
     window.onload = function () {
-  const title = document.getElementById('gradient-title');
-  const studio = document.getElementById('studio-part');
-  title.addEventListener('mouseenter', () => {
-    studio.classList.add('gradient-text');
-    localStorage.setItem('studioGradient', 'true');
-  });
+      const title = document.getElementById('gradient-title');
+      const studio = document.getElementById('studio-part');
+      title.addEventListener('mouseenter', () => {
+        studio.classList.add('gradient-text');
+        localStorage.setItem('studioGradient', 'true');
+      });
       if (localStorage.getItem('studioGradient') === 'true') {
-        document.getElementById('studio-part').classList.add('gradient');
+        document.getElementById('studio-part').classList.add('gradient-text');
       }
       const cachedUser = localStorage.getItem('user') || sessionStorage.getItem('user');
       if (cachedUser) {
