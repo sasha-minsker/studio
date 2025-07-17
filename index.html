@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sasha Minsker Studio | Launchpad</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
   <style>
     body {
@@ -40,14 +41,10 @@
 
 <body class="min-h-screen flex flex-col relative">
   <!-- Имя пользователя -->
-  <div id="user-name" class="absolute top-4 right-4 text-sm text-gray-400 hidden">Sasha M.</div>
+  <div id="user-name" class="absolute top-4 right-4 text-sm text-gray-400 hidden"></div>
 
-  <!-- Кнопка входа -->
-  <div id="login-button" class="absolute top-4 left-4 z-50">
-    <button onclick="simulateLogin()" class="bg-white text-gray-700 px-4 py-2 rounded-full shadow hover:shadow-md transition">
-      Войти с Google
-    </button>
-  </div>
+  <!-- Кнопка входа Google -->
+  <div id="g_id_signin" class="absolute top-4 left-4 z-50"></div>
 
   <!-- Контент -->
   <main class="flex-grow flex flex-col items-center pt-[10vh] px-4 text-gray-800">
@@ -59,97 +56,85 @@
 
     <!-- Тайлы -->
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 w-full max-w-screen-lg mb-12">
-      <!-- Всегда доступные -->
+      <!-- Открытые тайлы -->
       <a href="https://docs.google.com" target="_blank"
-         class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex
-                items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color">
+         class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200
+         flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color">
         Docs
       </a>
       <a href="https://drive.google.com" target="_blank"
-         class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex
-                items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color">
+         class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200
+         flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color">
         Drive
       </a>
       <a href="https://mail.google.com" target="_blank"
-         class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex
-                items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color">
+         class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200
+         flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color">
         Gmail
       </a>
       <a href="https://calendar.google.com" target="_blank"
-         class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex
-                items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color">
+         class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200
+         flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color">
         Calendar
       </a>
       <a href="https://meet.google.com" target="_blank"
-         class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex
-                items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color">
+         class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200
+         flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color">
         Meet
       </a>
 
-      <!-- Скрытые тайлы (только после "входа") -->
+      <!-- Тайлы, которые показываются только после входа -->
       <a href="https://photos.google.com" target="_blank"
-         class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex
-                items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized"
-         style="display: none;">
-        Photos
-      </a>
+         class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200
+         flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized"
+         style="display: none;">Photos</a>
+
       <a href="https://keep.google.com" target="_blank"
-         class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex
-                items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized"
-         style="display: none;">
-        Keep
-      </a>
+         class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200
+         flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized"
+         style="display: none;">Keep</a>
+
       <a href="https://maps.google.com" target="_blank"
-         class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex
-                items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized"
-         style="display: none;">
-        Maps
-      </a>
+         class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200
+         flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized"
+         style="display: none;">Maps</a>
+
       <a href="https://youtube.com" target="_blank"
-         class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex
-                items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized"
-         style="display: none;">
-        YouTube
-      </a>
+         class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200
+         flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized"
+         style="display: none;">YouTube</a>
+
       <a href="https://news.google.com" target="_blank"
-         class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex
-                items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized"
-         style="display: none;">
-        News
-      </a>
+         class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200
+         flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized"
+         style="display: none;">News</a>
+
       <a href="https://translate.google.com" target="_blank"
-         class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex
-                items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized"
-         style="display: none;">
-        Translate
-      </a>
+         class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200
+         flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized"
+         style="display: none;">Translate</a>
+
       <a href="https://classroom.google.com" target="_blank"
-         class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex
-                items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized"
-         style="display: none;">
-        Classroom
-      </a>
+         class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200
+         flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized"
+         style="display: none;">Classroom</a>
+
       <a href="https://contacts.google.com" target="_blank"
-         class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex
-                items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized"
-         style="display: none;">
-        Contacts
-      </a>
+         class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200
+         flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized"
+         style="display: none;">Contacts</a>
+
       <a href="https://forms.google.com" target="_blank"
-         class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex
-                items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized"
-         style="display: none;">
-        Forms
-      </a>
+         class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200
+         flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized"
+         style="display: none;">Forms</a>
+
       <a href="https://google.com" target="_blank"
-         class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex
-                items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized"
-         style="display: none;">
-        Search
-      </a>
+         class="aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200
+         flex items-center justify-center text-center text-base font-medium text-gray-800 hover-shadow-color hidden authorized"
+         style="display: none;">Search</a>
     </div>
 
-    <!-- Пустой отступ -->
     <div class="h-64"></div>
   </main>
 
@@ -158,22 +143,47 @@
     &copy; 2025 Sasha Minsker Studio
   </footer>
 
-  <!-- Скрипт -->
   <script>
-    // Градиент "Studio"
+    // Заголовок с градиентом
     const studio = document.getElementById('studio');
     const heading = document.getElementById('main-heading');
     heading.addEventListener('mouseenter', () => studio.classList.add('gradient'));
     heading.addEventListener('mouseleave', () => studio.classList.remove('gradient'));
 
-    // Симулированный вход
-    function simulateLogin() {
+    // Google Login
+    window.onload = function () {
+      google.accounts.id.initialize({
+        client_id: "1080259086303-5khq1m64o8g4if6r4088mqsa4pj1s57o.apps.googleusercontent.com",
+        callback: handleCredentialResponse
+      });
+
+      google.accounts.id.renderButton(
+        document.getElementById("g_id_signin"),
+        { theme: "outline", size: "medium" }
+      );
+    };
+
+    function handleCredentialResponse(response) {
+      const data = parseJwt(response.credential);
+      document.getElementById('user-name').textContent = data.name;
       document.getElementById('user-name').classList.remove('hidden');
-      document.getElementById('login-button').classList.add('hidden');
+      document.getElementById('g_id_signin').classList.add('hidden');
+
+      // Показать дополнительные плитки
       document.querySelectorAll('.authorized').forEach(el => {
         el.classList.remove('hidden');
         el.style.display = '';
       });
+    }
+
+    // Расшифровка JWT
+    function parseJwt(token) {
+      const base64Url = token.split('.')[1];
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      }).join(''));
+      return JSON.parse(jsonPayload);
     }
   </script>
 </body>
