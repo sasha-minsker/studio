@@ -7,27 +7,40 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <style>
-    #logout-button {
+    #logout-popup {
       display: none;
       position: absolute;
       top: 40px;
       right: 4px;
       background-color: white;
       border: 1px solid #ccc;
-      padding: 4px 8px;
-      font-size: 12px;
+      padding: 6px 12px;
+      font-size: 14px;
       cursor: pointer;
       z-index: 10;
+      border-radius: 4px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
-    #user-name:hover + #logout-button,
-    #logout-button:hover {
-      display: block;
+    .tile-button {
+      transition: all 0.3s ease;
+    }
+    .tile-button:hover {
+      box-shadow: 0 0 0 4px rgba(59,130,246,0.4);
+      transform: scale(1.03);
+    }
+    #studio {
+      transition: all 0.4s ease;
+    }
+    h1:hover #studio {
+      background: linear-gradient(90deg, #4285F4, #34A853, #FBBC05, #EA4335);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
   </style>
 </head>
 <body class="bg-gray-100 min-h-screen flex flex-col">
-  <div id="user-name" class="absolute top-4 right-4 text-sm text-gray-400 hidden cursor-pointer"></div>
-  <div id="logout-button" onclick="logout()">Log out</div>
+  <div id="user-name" class="absolute top-4 right-4 text-sm text-gray-400 hidden cursor-pointer" onmouseenter="showLogout()" onmouseleave="startLogoutTimer()"></div>
+  <div id="logout-popup" onmouseenter="cancelLogoutTimer()" onmouseleave="startLogoutTimer()" onclick="logout()">Log out</div>
   <div id="g_id_signin" class="absolute top-4 left-4 z-50"></div>
   <main class="flex-grow flex flex-col items-center pt-[10vh] px-4 text-gray-800">
     <h1 class="text-4xl font-bold text-center mb-12">Sasha Minsker <span class="text-gray-600" id="studio">Studio</span></h1>
@@ -35,8 +48,8 @@
     <!-- Кнопки загрузки и сброса -->
     <div id="upload-controls" class="mb-4 flex gap-4 hidden">
       <input type="file" id="tileFileInput" accept="application/json" class="hidden">
-      <button onclick="document.getElementById('tileFileInput').click()" class="px-4 py-2 bg-blue-600 text-white rounded shadow">Загрузить свой набор</button>
-      <button onclick="resetCustomTiles()" class="px-4 py-2 bg-gray-300 text-gray-800 rounded shadow">Сбросить</button>
+      <button onclick="document.getElementById('tileFileInput').click()" class="text-blue-600 hover:text-blue-800" title="Загрузить JSON"><svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v16h16V4H4zm8 8v4m0 0l-2-2m2 2l2-2" /></svg></button>
+      <button onclick="resetCustomTiles()" class="text-red-600 hover:text-red-800" title="Очистить"><svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg></button>
     </div>
 
     <div id="tile-container" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 w-full max-w-screen-lg"></div>
@@ -46,6 +59,23 @@
   </footer>
 
   <script>
+    let logoutTimer;
+
+    function showLogout() {
+      clearTimeout(logoutTimer);
+      document.getElementById('logout-popup').style.display = 'block';
+    }
+
+    function startLogoutTimer() {
+      logoutTimer = setTimeout(() => {
+        document.getElementById('logout-popup').style.display = 'none';
+      }, 3000);
+    }
+
+    function cancelLogoutTimer() {
+      clearTimeout(logoutTimer);
+    }
+
     const defaultTiles = [
       { title: 'Docs', link: 'https://docs.google.com' },
       { title: 'Drive', link: 'https://drive.google.com' },
@@ -61,7 +91,7 @@
         const a = document.createElement('a');
         a.href = tile.link;
         a.target = '_blank';
-        a.className = 'aspect-square bg-white rounded-xl shadow hover:scale-[1.02] transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800 hover:shadow-lg';
+        a.className = 'tile-button aspect-square bg-white rounded-xl shadow transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800';
         a.textContent = tile.title;
         container.appendChild(a);
       });
@@ -103,6 +133,7 @@
       document.getElementById('user-name').classList.add('hidden');
       document.getElementById('upload-controls').classList.add('hidden');
       document.getElementById('g_id_signin').classList.remove('hidden');
+      document.getElementById('logout-popup').style.display = 'none';
       renderTiles(defaultTiles);
     }
 
