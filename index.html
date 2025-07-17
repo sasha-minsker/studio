@@ -1,4 +1,4 @@
-<!-- Version: 0.63 -->
+<!-- Version: 0.64 -->
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -114,7 +114,7 @@
 
   <footer class="w-full relative py-4 text-sm text-gray-500">
     <div class="text-center">&copy; 2025 Sasha Minsker Studio</div>
-    <div class="absolute right-4 bottom-2">v 0.63</div>
+    <div class="absolute right-4 bottom-2">v 0.64</div>
   </footer>
 
   <script>
@@ -171,14 +171,23 @@
       document.getElementById('g_id_signin').style.display = 'block';
     }
 
-    function downloadCustomTiles() {
-      const tiles = JSON.parse(localStorage.getItem('customTiles'));
-      const blob = new Blob([JSON.stringify(tiles, null, 2)], { type: 'application/json' });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = 'tiles.json';
-      link.click();
-    }
+  function downloadCustomTiles() {
+  const stored = localStorage.getItem('customTiles');
+  if (!stored) {
+    alert('Нет загруженных пользовательских тайлов для скачивания.');
+    return;
+  }
+  try {
+    const tiles = JSON.parse(stored);
+    const blob = new Blob([JSON.stringify(tiles, null, 2)], { type: 'application/json' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'tiles.json';
+    link.click();
+  } catch (err) {
+    alert('Ошибка при попытке скачать JSON файл.');
+  }
+}
 
     function resetCustomTiles() {
       localStorage.removeItem('customTiles');
