@@ -6,7 +6,7 @@
   <title>Sasha Minsker Studio | Launchpad</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <!-- Version: 0.55 -->
+  <!-- Version: 0.57 -->
   <style>
     body {
       background-color: white;
@@ -58,7 +58,7 @@
         opacity: 1;
       }
     }
-    .gradient-text {
+    .gradient-studio {
       background: linear-gradient(90deg, #f88fa6, #fcbad3, #a2d2ff);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -68,6 +68,10 @@
       fill: #444;
       stroke: #444;
       transition: fill 0.3s ease, stroke 0.3s ease;
+      vertical-align: bottom;
+    }
+    .icon-button svg.triangle {
+      transform: scale(0.9);
     }
     .icon-button:hover svg.square {
       fill: #a2d2ff;
@@ -81,7 +85,16 @@
       fill: #f88fa6;
       stroke: #f88fa6;
     }
+    footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+      font-size: 0.875rem;
+      color: #666;
+    }
   </style>
+
 </head>
 <body class="min-h-screen flex flex-col">
   <div id="user-name" class="absolute top-4 right-4 text-sm text-gray-600 hidden cursor-pointer" onmouseenter="showLogout()" onmouseleave="startLogoutTimer()"></div>
