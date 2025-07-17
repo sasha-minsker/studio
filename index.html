@@ -114,7 +114,7 @@
 
   <footer class="w-full relative py-4 text-sm text-gray-500">
     <div class="text-center">&copy; 2025 Sasha Minsker Studio</div>
-    <div class="absolute right-4 bottom-2">v 0.59</div>
+    <div class="absolute right-4 bottom-2">v 0.60</div>
   </footer>
 
   <script>
@@ -256,6 +256,7 @@ if (isLoggedIn) {
       const userBlock = document.getElementById('user-name');
       userBlock.innerHTML = `<img src="${picture}" alt="user" class="rounded-full w-10 h-10">`;
       userBlock.classList.remove('hidden');
+      localStorage.setItem('userPicture', picture);
       document.getElementById('g_id_signin').style.display = 'none';
       document.getElementById('upload-controls').classList.remove('hidden');
 
