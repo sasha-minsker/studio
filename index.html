@@ -34,19 +34,19 @@
       transform: scale(1.05);
     }
     .tile-button:nth-child(5n+1):hover {
-      box-shadow: 0 0 27px rgba(255, 105, 97, 0.7);
+      box-shadow: 0 0 40px rgba(255, 105, 97, 0.7);
     }
     .tile-button:nth-child(5n+2):hover {
-      box-shadow: 0 0 27px rgba(255, 180, 128, 0.7);
+      box-shadow: 0 0 40px rgba(255, 180, 128, 0.7);
     }
     .tile-button:nth-child(5n+3):hover {
-      box-shadow: 0 0 27px rgba(144, 224, 239, 0.7);
+      box-shadow: 0 0 40px rgba(144, 224, 239, 0.7);
     }
     .tile-button:nth-child(5n+4):hover {
-      box-shadow: 0 0 27px rgba(130, 177, 255, 0.7);
+      box-shadow: 0 0 40px rgba(130, 177, 255, 0.7);
     }
     .tile-button:nth-child(5n+5):hover {
-      box-shadow: 0 0 27px rgba(255, 153, 204, 0.7);
+      box-shadow: 0 0 40px rgba(255, 153, 204, 0.7);
     }
     @keyframes fadeIn {
       to {
@@ -78,12 +78,7 @@
       fill: #f8acc8;
       stroke: #f8acc8;
     }
-    footer:hover, #user-pic:hover {
-      background: linear-gradient(90deg, #f88fa6, #fcbad3, #a2d2ff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    #logout-popup:hover {
+    footer:hover, #user-pic:hover, #logout-popup:hover {
       background: linear-gradient(90deg, #f88fa6, #fcbad3, #a2d2ff);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -92,7 +87,7 @@
 </head>
 <body class="min-h-screen flex flex-col">
   <div id="user-name" class="absolute top-4 right-4 text-sm text-gray-600 hidden cursor-pointer flex items-center gap-2" onmouseenter="showLogout()" onmouseleave="startLogoutTimer()">
-    <img id="user-pic" class="w-8 h-8 rounded-full" alt="user"/>
+    <img id="user-pic" class="w-10 h-10 rounded-full" alt="user"/>
   </div>
   <div id="logout-popup" onmouseenter="cancelLogoutTimer()" onmouseleave="startLogoutTimer()" onclick="logout()">Log out</div>
 
@@ -105,12 +100,12 @@
       </svg>
     </button>
     <button onclick="downloadCurrentTiles()" class="icon-button" title="Скачать JSON">
-      <svg class="w-8 h-8 triangle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+      <svg class="w-10 h-10 triangle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 16l-6-6h12l-6 6z" />
       </svg>
     </button>
     <button onclick="resetCustomTiles()" class="icon-button" title="Очистить">
-      <svg class="w-5 h-5 circle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <svg class="w-4 h-4 circle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <rect x="6" y="6" width="12" height="12" rx="2" />
       </svg>
     </button>
