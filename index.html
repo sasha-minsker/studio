@@ -72,18 +72,26 @@
       fill: #fcbad3;
       stroke: #fcbad3;
     }
+    .icon-button:hover svg.triangle {
+      fill: #90e0ef;
+      stroke: #90e0ef;
+    }
   </style>
 </head>
 <body class="min-h-screen flex flex-col">
   <div id="user-name" class="absolute top-4 right-4 text-sm text-gray-600 hidden cursor-pointer" onmouseenter="showLogout()" onmouseleave="startLogoutTimer()"></div>
   <div id="logout-popup" onmouseenter="cancelLogoutTimer()" onmouseleave="startLogoutTimer()" onclick="logout()">Log out</div>
 
-  <!-- Иконки в левом верхнем углу -->
   <div id="upload-controls" class="absolute top-4 left-4 z-50 flex gap-4 hidden">
     <input type="file" id="tileFileInput" accept="application/json" class="hidden">
     <button onclick="document.getElementById('tileFileInput').click()" class="icon-button" title="Загрузить JSON">
       <svg class="w-6 h-6 square" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
         <rect x="4" y="4" width="16" height="16" rx="2" stroke-width="2" />
+      </svg>
+    </button>
+    <button onclick="downloadCustomTiles()" class="icon-button" title="Скачать JSON">
+      <svg class="w-6 h-6 triangle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2 L2 22 H22 Z" />
       </svg>
     </button>
     <button onclick="resetCustomTiles()" class="icon-button" title="Очистить">
@@ -96,7 +104,7 @@
   <div id="g_id_signin" class="absolute top-4 right-28"></div>
 
   <main class="flex-grow flex flex-col items-center pt-[10vh] px-4">
-    <h1 id="gradient-title" class="text-4xl font-bold text-center mb-[10vh] text-gray-800 cursor-pointer" onmouseenter="document.getElementById('studio-part').classList.add('gradient-text'); localStorage.setItem('studioGradient', 'true');">
+    <h1 id="gradient-title" class="text-4xl font-bold text-center mb-[10vh] text-gray-800 cursor-pointer">
       Sasha Minsker <span id="studio-part">Studio</span>
     </h1>
     <div id="tile-container" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 w-full max-w-screen-lg mb-[20vh] pb-[20vh]"></div>
@@ -104,14 +112,39 @@
 
   <footer class="w-full relative py-4 text-sm text-gray-500">
     <div class="text-center">&copy; 2025 Sasha Minsker Studio</div>
-    <div class="absolute right-4 bottom-2">v 0.40</div>
+    <div class="absolute right-4 bottom-2">v 0.43</div>
   </footer>
 
   <script>
+    let isLoggedIn = false;
+    let customTilesLoaded = false;
     let logoutTimer;
 
+    const defaultTiles = [
+      { title: 'Google Docs', url: 'https://docs.google.com/' },
+      { title: 'YouTube', url: 'https://youtube.com' },
+      { title: 'Gmail', url: 'https://mail.google.com/' },
+      { title: 'Drive', url: 'https://drive.google.com/' },
+      { title: 'Calendar', url: 'https://calendar.google.com/' },
+    ];
+
+    const tileContainer = document.getElementById('tile-container');
+    const gradientTitle = document.getElementById('gradient-title');
+    const studioPart = document.getElementById('studio-part');
+
+    function showTiles(tiles) {
+      tileContainer.innerHTML = '';
+      tiles.forEach(tile => {
+        const a = document.createElement('a');
+        a.href = tile.url;
+        a.target = '_blank';
+        a.className = 'tile-button bg-white p-6 rounded-lg shadow hover:shadow-lg transition text-center';
+        a.textContent = tile.title;
+        tileContainer.appendChild(a);
+      });
+    }
+
     function showLogout() {
-      clearTimeout(logoutTimer);
       document.getElementById('logout-popup').style.display = 'block';
     }
 
@@ -125,139 +158,119 @@
       clearTimeout(logoutTimer);
     }
 
-    const defaultTiles = [
-      { title: 'Docs', link: 'https://docs.google.com' },
-      { title: 'Drive', link: 'https://drive.google.com' },
-      { title: 'Gmail', link: 'https://mail.google.com' },
-      { title: 'Calendar', link: 'https://calendar.google.com' },
-      { title: 'Meet', link: 'https://meet.google.com' }
-    ];
-
-    function renderTiles(tiles) {
-      const container = document.getElementById('tile-container');
-      container.innerHTML = '';
-      tiles.forEach((tile, index) => {
-        const a = document.createElement('a');
-        a.href = tile.link;
-        a.target = '_blank';
-        a.className = 'tile-button aspect-square bg-white bg-opacity-90 rounded-xl shadow transition duration-200 flex items-center justify-center text-center text-base font-semibold text-gray-800';
-        a.style.animationDelay = `${index * 100}ms`;
-        a.textContent = tile.title;
-        container.appendChild(a);
-      });
-    }
-
-    function handleCredentialResponse(response) {
-      const data = parseJwt(response.credential);
-      sessionStorage.setItem('user', JSON.stringify(data));
-      localStorage.setItem('user', JSON.stringify(data));
-      showUserUI(data.name);
-      const storedTiles = localStorage.getItem('customTiles');
-      if (storedTiles) {
-        try {
-          const parsed = JSON.parse(storedTiles);
-          renderTiles(parsed);
-        } catch (e) {
-          renderTiles(defaultTiles);
-        }
-      } else {
-        renderTiles(defaultTiles);
-      }
-    }
-
-    function showUserUI(name) {
-      const cachedUser = JSON.parse(localStorage.getItem('user') || sessionStorage.getItem('user'));
-      if (cachedUser && cachedUser.picture) {
-        const avatar = document.createElement('img');
-        avatar.src = cachedUser.picture;
-        avatar.alt = 'User Avatar';
-        avatar.className = 'w-11 h-11 rounded-full cursor-pointer';
-        avatar.onmouseenter = showLogout;
-        avatar.onmouseleave = startLogoutTimer;
-        const userDiv = document.getElementById('user-name');
-        userDiv.innerHTML = '';
-        userDiv.appendChild(avatar);
-      }
-      document.getElementById('user-name').classList.remove('hidden');
-      document.getElementById('g_id_signin')?.classList?.add('hidden');
-      document.getElementById('upload-controls').classList.remove('hidden');
-    }
-
-    function parseJwt(token) {
-      const base64Url = token.split('.')[1];
-      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-      const jsonPayload = decodeURIComponent(atob(base64).split('').map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join(''));
-      return JSON.parse(jsonPayload);
-    }
-
     function logout() {
-      sessionStorage.removeItem('user');
-      localStorage.removeItem('user');
+      localStorage.clear();
+      isLoggedIn = false;
+      customTilesLoaded = false;
       document.getElementById('user-name').classList.add('hidden');
       document.getElementById('upload-controls').classList.add('hidden');
-      document.getElementById('g_id_signin')?.classList?.remove('hidden');
-      document.getElementById('logout-popup').style.display = 'none';
-      document.getElementById('gradient-title').classList.remove('gradient');
-      renderTiles(defaultTiles);
+      studioPart.classList.remove('gradient-text');
+      gradientTitle.classList.remove('gradient-text');
+      studioPart.style = '';
+      showTiles(defaultTiles);
+      document.getElementById('g_id_signin').style.display = 'block';
     }
 
-    window.onload = function () {
-      const title = document.getElementById('gradient-title');
-      const studio = document.getElementById('studio-part');
-      title.addEventListener('mouseenter', () => {
-        studio.classList.add('gradient-text');
-        localStorage.setItem('studioGradient', 'true');
-      });
-      if (localStorage.getItem('studioGradient') === 'true') {
-        document.getElementById('studio-part').classList.add('gradient-text');
-      }
-      const cachedUser = localStorage.getItem('user') || sessionStorage.getItem('user');
-      if (cachedUser) {
-        const user = JSON.parse(cachedUser);
-        showUserUI(user.name);
-        const storedTiles = localStorage.getItem('customTiles');
-        if (storedTiles) {
-          try {
-            renderTiles(JSON.parse(storedTiles));
-          } catch {
-            renderTiles(defaultTiles);
-          }
-        } else {
-          renderTiles(defaultTiles);
-        }
-        return;
-      }
-      renderTiles(defaultTiles);
-      google.accounts.id.initialize({
-        client_id: "1080259086303-5khq1m64o8g4if6r4088mqsa4pj1s57o.apps.googleusercontent.com",
-        callback: handleCredentialResponse
-      });
-      google.accounts.id.renderButton(
-        document.getElementById("g_id_signin"),
-        { theme: "outline", size: "medium" }
-      );
-    };
+    function downloadCustomTiles() {
+      const tiles = JSON.parse(localStorage.getItem('customTiles'));
+      const blob = new Blob([JSON.stringify(tiles, null, 2)], { type: 'application/json' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'tiles.json';
+      link.click();
+    }
 
-    document.getElementById('tileFileInput').addEventListener('change', function(event) {
-      const file = event.target.files[0];
+    function resetCustomTiles() {
+      localStorage.removeItem('customTiles');
+      customTilesLoaded = false;
+      studioPart.classList.remove('gradient-text');
+      gradientTitle.classList.remove('gradient-text');
+      showTiles(defaultTiles);
+    }
+
+    function loadCustomTiles(tiles) {
+      localStorage.setItem('customTiles', JSON.stringify(tiles));
+      customTilesLoaded = true;
+      studioPart.classList.add('gradient-text');
+      gradientTitle.classList.add('gradient-text');
+      showTiles(tiles);
+    }
+
+    document.getElementById('tileFileInput').addEventListener('change', (e) => {
+      const file = e.target.files[0];
       if (!file) return;
       const reader = new FileReader();
-      reader.onload = function(e) {
+      reader.onload = function(evt) {
         try {
-          const data = JSON.parse(e.target.result);
-          localStorage.setItem('customTiles', JSON.stringify(data));
-          renderTiles(data);
+          const tiles = JSON.parse(evt.target.result);
+          loadCustomTiles(tiles);
         } catch (err) {
-          alert('Ошибка чтения JSON-файла');
+          alert('Ошибка загрузки JSON файла');
         }
       };
       reader.readAsText(file);
     });
 
-    function resetCustomTiles() {
-      localStorage.removeItem('customTiles');
-      renderTiles(defaultTiles);
+    window.onload = () => {
+      showTiles(defaultTiles);
+
+      const storedTiles = localStorage.getItem('customTiles');
+      if (storedTiles) {
+        try {
+          const tiles = JSON.parse(storedTiles);
+          loadCustomTiles(tiles);
+        } catch {}
+      }
+
+      window.google.accounts.id.initialize({
+        client_id: '1080259086303-5khq1m64o8g4if6r4088mqsa4pj1s57o.apps.googleusercontent.com',
+        callback: handleCredentialResponse
+      });
+
+      window.google.accounts.id.renderButton(
+        document.getElementById('g_id_signin'),
+        { theme: 'outline', size: 'large' }
+      );
+    };
+
+    function handleCredentialResponse(response) {
+      const decoded = parseJwt(response.credential);
+      const name = decoded.name;
+      const picture = decoded.picture;
+      isLoggedIn = true;
+
+      const userBlock = document.getElementById('user-name');
+      userBlock.innerHTML = `<img src="${picture}" alt="user" class="rounded-full w-10 h-10">`;
+      userBlock.classList.remove('hidden');
+      document.getElementById('g_id_signin').style.display = 'none';
+      document.getElementById('upload-controls').classList.remove('hidden');
+
+      if (localStorage.getItem('customTiles')) {
+        gradientTitle.classList.add('gradient-text');
+      }
     }
+
+    function parseJwt(token) {
+      const base64Url = token.split('.')[1];
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      }).join(''));
+
+      return JSON.parse(jsonPayload);
+    }
+
+    gradientTitle.addEventListener('mouseenter', () => {
+      if (isLoggedIn && customTilesLoaded) {
+        gradientTitle.classList.add('gradient-text');
+      }
+    });
+
+    gradientTitle.addEventListener('mouseleave', () => {
+      if (!(isLoggedIn && customTilesLoaded)) {
+        gradientTitle.classList.remove('gradient-text');
+      }
+    });
   </script>
 </body>
 </html>
