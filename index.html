@@ -1,4 +1,4 @@
-<!-- Version: v 2025.07.17-05.14 -->
+<!-- Version: 2025.07.17-05.23 -->
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -11,6 +11,88 @@
     body {
       background-color: white;
     }
+
+    .tile-button {
+      aspect-ratio: 1/1;
+      transition: all 0.3s ease;
+      opacity: 0;
+      animation: fadeIn 0.6s ease forwards;
+      border: 1px solid rgba(0, 0, 0, 0.2);
+    }
+
+    .tile-button:hover {
+      transform: scale(1.05);
+    }
+
+    .tile-button:nth-child(5n+1):hover {
+      box-shadow: 0 0 12px rgba(255, 105, 97, 0.4);
+    }
+
+    .tile-button:nth-child(5n+2):hover {
+      box-shadow: 0 0 12px rgba(255, 180, 128, 0.4);
+    }
+
+    .tile-button:nth-child(5n+3):hover {
+      box-shadow: 0 0 12px rgba(144, 224, 239, 0.4);
+    }
+
+    .tile-button:nth-child(5n+4):hover {
+      box-shadow: 0 0 12px rgba(130, 177, 255, 0.4);
+    }
+
+    .tile-button:nth-child(5n+5):hover {
+      box-shadow: 0 0 12px rgba(255, 153, 204, 0.4);
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    .gradient-text {
+      background: linear-gradient(90deg, #f88fa6, #fcbad3, #a2d2ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      transition: all 1s ease;
+    }
+
+    .icon-button svg {
+      fill: #444;
+      stroke: #444;
+      transition: all 0.3s ease;
+    }
+
+    .icon-button:hover .square {
+      fill: #6aaed6;
+      stroke: #6aaed6;
+    }
+
+    .icon-button:hover .triangle {
+      fill: #90e0ef;
+      stroke: #90e0ef;
+    }
+
+    .icon-button:hover .circle {
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        box-shadow: 0 0 0px rgba(252, 186, 211, 0.6);
+      }
+      50% {
+        box-shadow: 0 0 12px 6px rgba(252, 186, 211, 0.6);
+      }
+    }
+
+    #footer-text:hover {
+      background: linear-gradient(90deg, #f88fa6, #fcbad3, #a2d2ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      transition: all 0.6s ease;
+    }
+
     #logout-popup {
       display: none;
       position: absolute;
@@ -23,106 +105,39 @@
       cursor: pointer;
       z-index: 10;
       border-radius: 4px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-    .tile-button {
-      aspect-ratio: 1 / 1;
-      transition: all 0.3s ease;
-      opacity: 0;
-      animation: fadeIn 0.6s ease forwards;
-      border: 1px solid rgba(0, 0, 0, 0.2);
-    }
-    .tile-button:hover {
-      transform: scale(1.05);
-    }
-    .tile-button:nth-child(5n+1):hover {
-      box-shadow: 0 0 12px rgba(255, 105, 97, 0.4);
-    }
-    .tile-button:nth-child(5n+2):hover {
-      box-shadow: 0 0 12px rgba(255, 180, 128, 0.4);
-    }
-    .tile-button:nth-child(5n+3):hover {
-      box-shadow: 0 0 12px rgba(144, 224, 239, 0.4);
-    }
-    .tile-button:nth-child(5n+4):hover {
-      box-shadow: 0 0 12px rgba(130, 177, 255, 0.4);
-    }
-    .tile-button:nth-child(5n+5):hover {
-      box-shadow: 0 0 12px rgba(255, 153, 204, 0.4);
-    }
-    @keyframes fadeIn {
-      to {
-        opacity: 1;
-      }
-    }
-    .gradient-text {
-      background: linear-gradient(90deg, #f88fa6, #fcbad3, #a2d2ff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      transition: all 1s ease;
-    }
-    .icon-button svg {
-      fill: #444;
-      stroke: #444;
-      transition: all 0.3s ease;
-    }
-    .icon-button:hover svg.square {
-      fill: #6aaed6;
-      stroke: #6aaed6;
-    }
-    .icon-button:hover svg.triangle {
-      fill: #90ee90;
-      stroke: #90ee90;
-    }
-    .icon-button:hover svg.circle {
-      stroke: #ff4f81;
-      filter: drop-shadow(0 0 10px #ff4f81);
-    }
-    .pulse-ring {
-      animation: pulse 1.5s infinite ease-in-out;
-    }
-    @keyframes pulse {
-      0% {
-        stroke-width: 2;
-        filter: drop-shadow(0 0 0px #ff4f81);
-      }
-      50% {
-        stroke-width: 2;
-        filter: drop-shadow(0 0 10px #ff4f81);
-      }
-      100% {
-        stroke-width: 2;
-        filter: drop-shadow(0 0 0px #ff4f81);
-      }
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
   </style>
 </head>
 <body class="min-h-screen flex flex-col">
-
+  <!-- User avatar and logout -->
   <div id="user-name" class="absolute top-4 right-4 text-sm text-gray-600 hidden cursor-pointer" onmouseenter="showLogout()" onmouseleave="startLogoutTimer()"></div>
   <div id="logout-popup" onmouseenter="cancelLogoutTimer()" onmouseleave="startLogoutTimer()" onclick="logout()">Log out</div>
 
+  <!-- Icon controls -->
   <div id="upload-controls" class="absolute top-4 left-4 z-50 flex gap-4 hidden">
     <input type="file" id="tileFileInput" accept="application/json" class="hidden">
     <button onclick="document.getElementById('tileFileInput').click()" class="icon-button" title="Загрузить JSON">
       <svg class="w-6 h-6 square" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-        <rect x="4" y="4" width="16" height="16" rx="2" stroke-width="2" />
+        <rect x="4" y="4" width="16" height="16" rx="2" />
       </svg>
     </button>
     <button onclick="downloadCustomTiles()" class="icon-button" title="Скачать JSON">
       <svg class="w-5 h-5 triangle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-        <path d="M12 20 L2 4 H22 Z"/>
+        <path d="M12 22 L2 2 H22 Z" />
       </svg>
     </button>
     <button onclick="resetCustomTiles()" class="icon-button" title="Очистить">
-      <svg class="w-6 h-6 circle pulse-ring" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-        <circle cx="12" cy="12" r="10" stroke-width="2" fill="none"/>
+      <svg class="w-6 h-6 circle" xmlns="http://www.w3.org/2000/svg" fill="none">
+        <circle cx="12" cy="12" r="10" stroke-width="2" fill="none" />
       </svg>
     </button>
   </div>
 
+  <!-- Google Sign-in button -->
   <div id="g_id_signin" class="absolute top-4 right-28"></div>
 
+  <!-- Main content -->
   <main class="flex-grow flex flex-col items-center pt-[10vh] px-4">
     <h1 id="gradient-title" class="text-4xl font-bold text-center mb-[10vh] text-gray-800 cursor-default">
       Sasha Minsker <span id="studio-part">Studio</span>
@@ -130,11 +145,13 @@
     <div id="tile-container" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 w-full max-w-screen-lg mb-[20vh] pb-[20vh]"></div>
   </main>
 
+  <!-- Footer -->
   <footer class="w-full relative py-4 text-sm text-gray-500">
-    <div class="text-center">&copy; 2025 Sasha Minsker Studio</div>
-    <div class="absolute right-4 bottom-2">v 2025.07.17-05.14</div>
+    <div id="footer-text" class="text-center">&copy; 2025 Sasha Minsker Studio</div>
+    <div class="absolute right-4 bottom-2">v 0.69</div>
   </footer>
 
+  <!-- JavaScript -->
   <script>
     let isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
     let customTilesLoaded = false;
@@ -149,7 +166,6 @@
     ];
 
     const tileContainer = document.getElementById('tile-container');
-    const gradientTitle = document.getElementById('gradient-title');
     const studioPart = document.getElementById('studio-part');
 
     function showTiles(tiles) {
@@ -164,6 +180,20 @@
       });
     }
 
+    function showLogout() {
+      document.getElementById('logout-popup').style.display = 'block';
+    }
+
+    function startLogoutTimer() {
+      logoutTimer = setTimeout(() => {
+        document.getElementById('logout-popup').style.display = 'none';
+      }, 1000);
+    }
+
+    function cancelLogoutTimer() {
+      clearTimeout(logoutTimer);
+    }
+
     function logout() {
       localStorage.clear();
       isLoggedIn = false;
@@ -176,9 +206,9 @@
     }
 
     function downloadCustomTiles() {
-      const tiles = JSON.parse(localStorage.getItem('customTiles'));
-      if (!tiles) return;
-      const blob = new Blob([JSON.stringify(tiles, null, 2)], { type: 'application/json' });
+      const tiles = localStorage.getItem('customTiles');
+      if (!tiles) return alert('Нет кастомных тайлов для скачивания');
+      const blob = new Blob([tiles], { type: 'application/json' });
       const link = document.createElement('a');
       link.href = URL.createObjectURL(blob);
       link.download = 'tiles.json';
@@ -271,6 +301,7 @@
       const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
       }).join(''));
+
       return JSON.parse(jsonPayload);
     }
   </script>
