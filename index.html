@@ -1,4 +1,3 @@
-<!-- Version: 0.58 -->
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -105,7 +104,7 @@
   <div id="g_id_signin" class="absolute top-4 right-28"></div>
 
   <main class="flex-grow flex flex-col items-center pt-[10vh] px-4">
-    <h1 id="gradient-title" class="text-4xl font-bold text-center mb-[10vh] text-gray-800">
+    <h1 id="gradient-title" class="text-4xl font-bold text-center mb-[10vh] text-gray-800 cursor-pointer">
       Sasha Minsker <span id="studio-part">Studio</span>
     </h1>
     <div id="tile-container" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 w-full max-w-screen-lg mb-[20vh] pb-[20vh]"></div>
@@ -113,53 +112,50 @@
 
   <footer class="w-full relative py-4 text-sm text-gray-500">
     <div class="text-center">&copy; 2025 Sasha Minsker Studio</div>
-    <div class="absolute right-4 bottom-2">v 0.58</div>
+    <div class="absolute right-4 bottom-2">v 0.43</div>
   </footer>
-</body>
-</html>
 
   <script>
-    let isLoggedIn = localStorage.getItem('userLoggedIn') === 'true';
+    let isLoggedIn = false;
     let customTilesLoaded = false;
     let logoutTimer;
 
-    const defaultTiles = [...]; // тот же массив
+    const defaultTiles = [
+      { title: 'Google Docs', url: 'https://docs.google.com/' },
+      { title: 'YouTube', url: 'https://youtube.com' },
+      { title: 'Gmail', url: 'https://mail.google.com/' },
+      { title: 'Drive', url: 'https://drive.google.com/' },
+      { title: 'Calendar', url: 'https://calendar.google.com/' },
+    ];
 
-    function loadCustomTiles(tiles) {
-      localStorage.setItem('customTiles', JSON.stringify(tiles));
-      customTilesLoaded = true;
-      document.getElementById('studio-part').classList.add('gradient-text');
-      showTiles(tiles);
+    const tileContainer = document.getElementById('tile-container');
+    const gradientTitle = document.getElementById('gradient-title');
+    const studioPart = document.getElementById('studio-part');
+
+    function showTiles(tiles) {
+      tileContainer.innerHTML = '';
+      tiles.forEach(tile => {
+        const a = document.createElement('a');
+        a.href = tile.url;
+        a.target = '_blank';
+        a.className = 'tile-button bg-white p-6 rounded-lg shadow hover:shadow-lg transition text-center';
+        a.textContent = tile.title;
+        tileContainer.appendChild(a);
+      });
     }
 
-    window.onload = () => {
-      const storedTiles = localStorage.getItem('customTiles');
-      if (storedTiles) {
-        try {
-          loadCustomTiles(JSON.parse(storedTiles));
-        } catch {}
-      } else {
-        showTiles(defaultTiles);
-      }
-
-      if (isLoggedIn) {
-        document.getElementById('user-name').classList.remove('hidden');
-        document.getElementById('upload-controls').classList.remove('hidden');
-        document.getElementById('g_id_signin').style.display = 'none';
-      }
+    function showLogout() {
+      document.getElementById('logout-popup').style.display = 'block';
     }
 
-    function handleCredentialResponse(response) {
-      const decoded = parseJwt(response.credential);
-      const picture = decoded.picture;
-      isLoggedIn = true;
-      localStorage.setItem('userLoggedIn', 'true');
+    function startLogoutTimer() {
+      logoutTimer = setTimeout(() => {
+        document.getElementById('logout-popup').style.display = 'none';
+      }, 1000);
+    }
 
-      const userBlock = document.getElementById('user-name');
-      userBlock.innerHTML = `<img src="${picture}" alt="user" class="rounded-full w-10 h-10">`;
-      userBlock.classList.remove('hidden');
-      document.getElementById('g_id_signin').style.display = 'none';
-      document.getElementById('upload-controls').classList.remove('hidden');
+    function cancelLogoutTimer() {
+      clearTimeout(logoutTimer);
     }
 
     function logout() {
@@ -168,10 +164,113 @@
       customTilesLoaded = false;
       document.getElementById('user-name').classList.add('hidden');
       document.getElementById('upload-controls').classList.add('hidden');
-      document.getElementById('studio-part').classList.remove('gradient-text');
+      studioPart.classList.remove('gradient-text');
+      gradientTitle.classList.remove('gradient-text');
+      studioPart.style = '';
       showTiles(defaultTiles);
       document.getElementById('g_id_signin').style.display = 'block';
     }
+
+    function downloadCustomTiles() {
+      const tiles = JSON.parse(localStorage.getItem('customTiles'));
+      const blob = new Blob([JSON.stringify(tiles, null, 2)], { type: 'application/json' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'tiles.json';
+      link.click();
+    }
+
+    function resetCustomTiles() {
+      localStorage.removeItem('customTiles');
+      customTilesLoaded = false;
+      studioPart.classList.remove('gradient-text');
+      gradientTitle.classList.remove('gradient-text');
+      showTiles(defaultTiles);
+    }
+
+    function loadCustomTiles(tiles) {
+      localStorage.setItem('customTiles', JSON.stringify(tiles));
+      customTilesLoaded = true;
+      studioPart.classList.add('gradient-text');
+      gradientTitle.classList.add('gradient-text');
+      showTiles(tiles);
+    }
+
+    document.getElementById('tileFileInput').addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        try {
+          const tiles = JSON.parse(evt.target.result);
+          loadCustomTiles(tiles);
+        } catch (err) {
+          alert('Ошибка загрузки JSON файла');
+        }
+      };
+      reader.readAsText(file);
+    });
+
+    window.onload = () => {
+      showTiles(defaultTiles);
+
+      const storedTiles = localStorage.getItem('customTiles');
+      if (storedTiles) {
+        try {
+          const tiles = JSON.parse(storedTiles);
+          loadCustomTiles(tiles);
+        } catch {}
+      }
+
+      window.google.accounts.id.initialize({
+        client_id: '1080259086303-5khq1m64o8g4if6r4088mqsa4pj1s57o.apps.googleusercontent.com',
+        callback: handleCredentialResponse
+      });
+
+      window.google.accounts.id.renderButton(
+        document.getElementById('g_id_signin'),
+        { theme: 'outline', size: 'large' }
+      );
+    };
+
+    function handleCredentialResponse(response) {
+      const decoded = parseJwt(response.credential);
+      const name = decoded.name;
+      const picture = decoded.picture;
+      isLoggedIn = true;
+
+      const userBlock = document.getElementById('user-name');
+      userBlock.innerHTML = `<img src="${picture}" alt="user" class="rounded-full w-10 h-10">`;
+      userBlock.classList.remove('hidden');
+      document.getElementById('g_id_signin').style.display = 'none';
+      document.getElementById('upload-controls').classList.remove('hidden');
+
+      if (localStorage.getItem('customTiles')) {
+        gradientTitle.classList.add('gradient-text');
+      }
+    }
+
+    function parseJwt(token) {
+      const base64Url = token.split('.')[1];
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      }).join(''));
+
+      return JSON.parse(jsonPayload);
+    }
+
+    gradientTitle.addEventListener('mouseenter', () => {
+      if (isLoggedIn && customTilesLoaded) {
+        gradientTitle.classList.add('gradient-text');
+      }
+    });
+
+    gradientTitle.addEventListener('mouseleave', () => {
+      if (!(isLoggedIn && customTilesLoaded)) {
+        gradientTitle.classList.remove('gradient-text');
+      }
+    });
   </script>
 </body>
 </html>
