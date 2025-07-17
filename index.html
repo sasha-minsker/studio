@@ -8,8 +8,7 @@
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <style>
     body {
-      background: url('SASHA MINSKER YT BACKGROUND.png') no-repeat center center fixed;
-      background-size: cover;
+      background-color: white;
     }
     #logout-popup {
       display: none;
@@ -29,6 +28,7 @@
       transition: all 0.3s ease;
       opacity: 0;
       animation: fadeIn 0.6s ease forwards;
+      border: 1px solid rgba(0, 0, 0, 0.1);
     }
     .tile-button:hover {
       box-shadow: 0 0 0 4px rgba(66, 133, 244, 0.4);
@@ -49,18 +49,18 @@
       -webkit-text-fill-color: transparent;
     }
     .icon-button svg {
-      fill: #ffffff;
-      stroke: #ffffff;
+      fill: #555;
+      stroke: #555;
       transition: fill 0.3s ease, stroke 0.3s ease;
     }
     .icon-button:hover svg {
-      fill: #34A853;
-      stroke: #34A853;
+      fill: #4285F4;
+      stroke: #4285F4;
     }
   </style>
 </head>
 <body class="min-h-screen flex flex-col">
-  <div id="user-name" class="absolute top-4 right-4 text-sm text-gray-300 hidden cursor-pointer" onmouseenter="showLogout()" onmouseleave="startLogoutTimer()"></div>
+  <div id="user-name" class="absolute top-4 right-4 text-sm text-gray-600 hidden cursor-pointer" onmouseenter="showLogout()" onmouseleave="startLogoutTimer()"></div>
   <div id="logout-popup" onmouseenter="cancelLogoutTimer()" onmouseleave="startLogoutTimer()" onclick="logout()">Log out</div>
 
   <!-- Иконки в левом верхнем углу -->
@@ -74,12 +74,12 @@
     </button>
   </div>
 
-  <main class="flex-grow flex flex-col items-center pt-[10vh] px-4 text-white">
-    <h1 class="text-4xl font-bold text-center mb-[10vh]">Sasha Minsker <span class="text-gray-200" id="studio">Studio</span></h1>
+  <main class="flex-grow flex flex-col items-center pt-[10vh] px-4">
+    <h1 class="text-4xl font-bold text-center mb-[10vh] text-gray-800">Sasha Minsker <span class="text-gray-500" id="studio">Studio</span></h1>
     <div id="tile-container" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 w-full max-w-screen-lg mb-[20vh] pb-[20vh]"></div>
   </main>
 
-  <footer class="w-full text-center py-4 text-sm text-gray-200">
+  <footer class="w-full text-center py-4 text-sm text-gray-500">
     &copy; 2025 Sasha Minsker Studio
   </footer>
 
@@ -116,7 +116,7 @@
         const a = document.createElement('a');
         a.href = tile.link;
         a.target = '_blank';
-        a.className = 'tile-button aspect-square bg-white bg-opacity-70 rounded-xl shadow transition duration-200 flex items-center justify-center text-center text-base font-semibold text-gray-800';
+        a.className = 'tile-button aspect-square bg-white bg-opacity-90 rounded-xl shadow transition duration-200 flex items-center justify-center text-center text-base font-semibold text-gray-800';
         a.style.animationDelay = `${index * 100}ms`;
         a.textContent = tile.title;
         container.appendChild(a);
