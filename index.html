@@ -6,15 +6,34 @@
   <title>Sasha Minsker Studio | Launchpad</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <style>
+    #logout-button {
+      display: none;
+      position: absolute;
+      top: 40px;
+      right: 4px;
+      background-color: white;
+      border: 1px solid #ccc;
+      padding: 4px 8px;
+      font-size: 12px;
+      cursor: pointer;
+      z-index: 10;
+    }
+    #user-name:hover + #logout-button,
+    #logout-button:hover {
+      display: block;
+    }
+  </style>
 </head>
 <body class="bg-gray-100 min-h-screen flex flex-col">
-  <div id="user-name" class="absolute top-4 right-4 text-sm text-gray-400 hidden"></div>
+  <div id="user-name" class="absolute top-4 right-4 text-sm text-gray-400 hidden cursor-pointer"></div>
+  <div id="logout-button" onclick="logout()">Log out</div>
   <div id="g_id_signin" class="absolute top-4 left-4 z-50"></div>
   <main class="flex-grow flex flex-col items-center pt-[10vh] px-4 text-gray-800">
     <h1 class="text-4xl font-bold text-center mb-12">Sasha Minsker <span class="text-gray-600" id="studio">Studio</span></h1>
 
     <!-- Кнопки загрузки и сброса -->
-    <div class="mb-4 flex gap-4">
+    <div id="upload-controls" class="mb-4 flex gap-4 hidden">
       <input type="file" id="tileFileInput" accept="application/json" class="hidden">
       <button onclick="document.getElementById('tileFileInput').click()" class="px-4 py-2 bg-blue-600 text-white rounded shadow">Загрузить свой набор</button>
       <button onclick="resetCustomTiles()" class="px-4 py-2 bg-gray-300 text-gray-800 rounded shadow">Сбросить</button>
@@ -50,9 +69,8 @@
 
     function handleCredentialResponse(response) {
       const data = parseJwt(response.credential);
-      document.getElementById('user-name').textContent = data.name;
-      document.getElementById('user-name').classList.remove('hidden');
-      document.getElementById('g_id_signin').classList.add('hidden');
+      sessionStorage.setItem('user', JSON.stringify(data));
+      showUserUI(data.name);
       const storedTiles = localStorage.getItem('customTiles');
       if (storedTiles) {
         try {
@@ -66,6 +84,13 @@
       }
     }
 
+    function showUserUI(name) {
+      document.getElementById('user-name').textContent = name;
+      document.getElementById('user-name').classList.remove('hidden');
+      document.getElementById('g_id_signin').classList.add('hidden');
+      document.getElementById('upload-controls').classList.remove('hidden');
+    }
+
     function parseJwt(token) {
       const base64Url = token.split('.')[1];
       const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
@@ -73,7 +98,32 @@
       return JSON.parse(jsonPayload);
     }
 
+    function logout() {
+      sessionStorage.removeItem('user');
+      document.getElementById('user-name').classList.add('hidden');
+      document.getElementById('upload-controls').classList.add('hidden');
+      document.getElementById('g_id_signin').classList.remove('hidden');
+      renderTiles(defaultTiles);
+    }
+
     window.onload = function () {
+      const cachedUser = sessionStorage.getItem('user');
+      if (cachedUser) {
+        const user = JSON.parse(cachedUser);
+        showUserUI(user.name);
+        const storedTiles = localStorage.getItem('customTiles');
+        if (storedTiles) {
+          try {
+            renderTiles(JSON.parse(storedTiles));
+          } catch {
+            renderTiles(defaultTiles);
+          }
+        } else {
+          renderTiles(defaultTiles);
+        }
+        return;
+      }
+      renderTiles(defaultTiles);
       google.accounts.id.initialize({
         client_id: "1080259086303-5khq1m64o8g4if6r4088mqsa4pj1s57o.apps.googleusercontent.com",
         callback: handleCredentialResponse
