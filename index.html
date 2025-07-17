@@ -56,7 +56,7 @@
     h1 {
       transition: all 1s ease;
     }
-    h1.gradient {
+    .gradient-text {
   background: linear-gradient(90deg, #f88fa6, #fcbad3, #a2d2ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -95,7 +95,7 @@
 </button>
     
     <button onclick="resetCustomTiles()" class="icon-button" title="Очистить">
-      <svg class="w-5 h-5 ring minus" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="#d88ba0" fill="none">
+      <svg class="w-5 h-5 ring minus" xmlns="http://www.w3.org/2000/svg" viewBox="2 2 20 20" stroke="#d88ba0" fill="none">
   <circle cx="12" cy="12" r="9" stroke-width="2" fill="none" />
 </svg>
     </button>
@@ -104,7 +104,7 @@
   <div id="g_id_signin" class="absolute top-4 right-28"></div>
 
   <main class="flex-grow flex flex-col items-center pt-[10vh] px-4">
-    <h1 id="gradient-title" class="text-4xl font-bold text-center mb-[10vh] text-gray-800 cursor-pointer" onmouseenter="document.getElementById('studio-part').classList.add('gradient'); localStorage.setItem('studioGradient', 'true');">
+    <h1 id="gradient-title" class="text-4xl font-bold text-center mb-[10vh] text-gray-800 cursor-pointer" onmouseenter="document.getElementById('studio-part').classList.add('gradient-text'); localStorage.setItem('studioGradient', 'true');">
   Sasha Minsker <span id="studio-part">Studio</span>
 </h1>
     <div id="tile-container" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 w-full max-w-screen-lg mb-[20vh] pb-[20vh]"></div>
@@ -112,7 +112,7 @@
 
   <footer class="w-full relative py-4 text-sm text-gray-500">
   <div class="text-center">&copy; 2025 Sasha Minsker Studio</div>
-  <div class="absolute right-4 bottom-2">v 0.37</div>
+  <div class="absolute right-4 bottom-2">v 0.38</div>
 </footer>
 
   <script>
@@ -211,7 +211,7 @@
   const title = document.getElementById('gradient-title');
   const studio = document.getElementById('studio-part');
   title.addEventListener('mouseenter', () => {
-    studio.classList.add('gradient');
+    studio.classList.add('gradient-text');
     localStorage.setItem('studioGradient', 'true');
   });
       if (localStorage.getItem('studioGradient') === 'true') {
