@@ -1,4 +1,4 @@
-<!-- Version: 0.61 -->
+<!-- Version: 0.63 -->
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -71,8 +71,8 @@
       stroke: #6aaed6;
     }
     .icon-button:hover svg.circle {
-      fill: #fcbad3;
-      stroke: #fcbad3;
+      fill: #f88fa6;
+      stroke: #f88fa6;
     }
     .icon-button:hover svg.triangle {
       fill: #90e0ef;
@@ -86,17 +86,17 @@
 
   <div id="upload-controls" class="absolute top-4 left-4 z-50 flex gap-4 hidden">
     <input type="file" id="tileFileInput" accept="application/json" class="hidden">
-    <button onclick="document.getElementById('tileFileInput').click()" class="icon-button" title="Загрузить меню">
+    <button onclick="document.getElementById('tileFileInput').click()" class="icon-button" title="Загрузить JSON">
       <svg class="w-6 h-6 square" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
         <rect x="4" y="4" width="16" height="16" rx="2" stroke-width="2" />
       </svg>
     </button>
-    <button onclick="downloadCustomTiles()" class="icon-button" title="Сохранить меню">
-      <svg class="w-6 h-6 triangle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+    <button onclick="downloadCustomTiles()" class="icon-button" title="Скачать JSON">
+      <svg class="w-5 h-5 triangle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
         <path d="M12 2 L2 22 H22 Z" />
       </svg>
     </button>
-    <button onclick="resetCustomTiles()" class="icon-button" title="Очистить меню">
+    <button onclick="resetCustomTiles()" class="icon-button" title="Очистить">
       <svg class="w-5 h-5 circle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
         <circle cx="12" cy="12" r="10" stroke="#444" stroke-width="2" fill="none"/>
       </svg>
@@ -114,7 +114,7 @@
 
   <footer class="w-full relative py-4 text-sm text-gray-500">
     <div class="text-center">&copy; 2025 Sasha Minsker Studio</div>
-    <div class="absolute right-4 bottom-2">v 0.61</div>
+    <div class="absolute right-4 bottom-2">v 0.63</div>
   </footer>
 
   <script>
@@ -167,8 +167,6 @@
       document.getElementById('user-name').classList.add('hidden');
       document.getElementById('upload-controls').classList.add('hidden');
       studioPart.classList.remove('gradient-text');
-      gradientTitle.classList.remove('gradient-text');
-      studioPart.style = '';
       showTiles(defaultTiles);
       document.getElementById('g_id_signin').style.display = 'block';
     }
@@ -186,7 +184,6 @@
       localStorage.removeItem('customTiles');
       customTilesLoaded = false;
       studioPart.classList.remove('gradient-text');
-      gradientTitle.classList.remove('gradient-text');
       showTiles(defaultTiles);
     }
 
@@ -194,7 +191,6 @@
       localStorage.setItem('customTiles', JSON.stringify(tiles));
       customTilesLoaded = true;
       studioPart.classList.add('gradient-text');
-      gradientTitle.classList.add('gradient-text');
       showTiles(tiles);
     }
 
@@ -260,7 +256,7 @@
       document.getElementById('upload-controls').classList.remove('hidden');
 
       if (localStorage.getItem('customTiles')) {
-        gradientTitle.classList.add('gradient-text');
+        studioPart.classList.add('gradient-text');
       }
     }
 
