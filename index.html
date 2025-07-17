@@ -7,6 +7,10 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <style>
+    body {
+      background: url('SASHA MINSKER YT BACKGROUND.png') no-repeat center center fixed;
+      background-size: cover;
+    }
     #logout-popup {
       display: none;
       position: absolute;
@@ -23,38 +27,59 @@
     }
     .tile-button {
       transition: all 0.3s ease;
+      opacity: 0;
+      animation: fadeIn 0.6s ease forwards;
     }
     .tile-button:hover {
-      box-shadow: 0 0 0 4px rgba(59,130,246,0.4);
+      box-shadow: 0 0 0 4px rgba(66, 133, 244, 0.4);
       transform: scale(1.03);
+      border: 2px solid rgba(66, 133, 244, 0.6);
+    }
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
     }
     #studio {
-      transition: all 0.4s ease;
+      transition: all 0.8s ease;
     }
     h1:hover #studio {
-      background: linear-gradient(90deg, #4285F4, #34A853, #FBBC05, #EA4335);
+      background: linear-gradient(90deg, #EA4335, #FBBC05, #34A853, #4285F4);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
+    .icon-button svg {
+      fill: #ffffff;
+      stroke: #ffffff;
+      transition: fill 0.3s ease, stroke 0.3s ease;
+    }
+    .icon-button:hover svg {
+      fill: #34A853;
+      stroke: #34A853;
+    }
   </style>
 </head>
-<body class="bg-gray-100 min-h-screen flex flex-col">
-  <div id="user-name" class="absolute top-4 right-4 text-sm text-gray-400 hidden cursor-pointer" onmouseenter="showLogout()" onmouseleave="startLogoutTimer()"></div>
+<body class="min-h-screen flex flex-col">
+  <div id="user-name" class="absolute top-4 right-4 text-sm text-gray-300 hidden cursor-pointer" onmouseenter="showLogout()" onmouseleave="startLogoutTimer()"></div>
   <div id="logout-popup" onmouseenter="cancelLogoutTimer()" onmouseleave="startLogoutTimer()" onclick="logout()">Log out</div>
-  <div id="g_id_signin" class="absolute top-4 left-4 z-50"></div>
-  <main class="flex-grow flex flex-col items-center pt-[10vh] px-4 text-gray-800">
-    <h1 class="text-4xl font-bold text-center mb-12">Sasha Minsker <span class="text-gray-600" id="studio">Studio</span></h1>
 
-    <!-- Кнопки загрузки и сброса -->
-    <div id="upload-controls" class="mb-4 flex gap-4 hidden">
-      <input type="file" id="tileFileInput" accept="application/json" class="hidden">
-      <button onclick="document.getElementById('tileFileInput').click()" class="text-blue-600 hover:text-blue-800" title="Загрузить JSON"><svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v16h16V4H4zm8 8v4m0 0l-2-2m2 2l2-2" /></svg></button>
-      <button onclick="resetCustomTiles()" class="text-red-600 hover:text-red-800" title="Очистить"><svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg></button>
-    </div>
+  <!-- Иконки в левом верхнем углу -->
+  <div id="upload-controls" class="absolute top-4 left-4 z-50 flex gap-4 hidden">
+    <input type="file" id="tileFileInput" accept="application/json" class="hidden">
+    <button onclick="document.getElementById('tileFileInput').click()" class="icon-button" title="Загрузить JSON">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v16h16V4H4zm8 8v4m0 0l-2-2m2 2l2-2" /></svg>
+    </button>
+    <button onclick="resetCustomTiles()" class="icon-button" title="Очистить">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+    </button>
+  </div>
 
-    <div id="tile-container" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 w-full max-w-screen-lg"></div>
+  <main class="flex-grow flex flex-col items-center pt-[10vh] px-4 text-white">
+    <h1 class="text-4xl font-bold text-center mb-[10vh]">Sasha Minsker <span class="text-gray-200" id="studio">Studio</span></h1>
+    <div id="tile-container" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 w-full max-w-screen-lg mb-[20vh] pb-[20vh]"></div>
   </main>
-  <footer class="w-full text-center py-4 text-sm text-gray-400">
+
+  <footer class="w-full text-center py-4 text-sm text-gray-200">
     &copy; 2025 Sasha Minsker Studio
   </footer>
 
@@ -69,7 +94,7 @@
     function startLogoutTimer() {
       logoutTimer = setTimeout(() => {
         document.getElementById('logout-popup').style.display = 'none';
-      }, 3000);
+      }, 1000);
     }
 
     function cancelLogoutTimer() {
@@ -87,11 +112,12 @@
     function renderTiles(tiles) {
       const container = document.getElementById('tile-container');
       container.innerHTML = '';
-      tiles.forEach(tile => {
+      tiles.forEach((tile, index) => {
         const a = document.createElement('a');
         a.href = tile.link;
         a.target = '_blank';
-        a.className = 'tile-button aspect-square bg-white rounded-xl shadow transition duration-200 flex items-center justify-center text-center text-base font-medium text-gray-800';
+        a.className = 'tile-button aspect-square bg-white bg-opacity-70 rounded-xl shadow transition duration-200 flex items-center justify-center text-center text-base font-semibold text-gray-800';
+        a.style.animationDelay = `${index * 100}ms`;
         a.textContent = tile.title;
         container.appendChild(a);
       });
@@ -100,6 +126,7 @@
     function handleCredentialResponse(response) {
       const data = parseJwt(response.credential);
       sessionStorage.setItem('user', JSON.stringify(data));
+      localStorage.setItem('user', JSON.stringify(data));
       showUserUI(data.name);
       const storedTiles = localStorage.getItem('customTiles');
       if (storedTiles) {
@@ -117,7 +144,7 @@
     function showUserUI(name) {
       document.getElementById('user-name').textContent = name;
       document.getElementById('user-name').classList.remove('hidden');
-      document.getElementById('g_id_signin').classList.add('hidden');
+      document.getElementById('g_id_signin')?.classList?.add('hidden');
       document.getElementById('upload-controls').classList.remove('hidden');
     }
 
@@ -130,15 +157,16 @@
 
     function logout() {
       sessionStorage.removeItem('user');
+      localStorage.removeItem('user');
       document.getElementById('user-name').classList.add('hidden');
       document.getElementById('upload-controls').classList.add('hidden');
-      document.getElementById('g_id_signin').classList.remove('hidden');
+      document.getElementById('g_id_signin')?.classList?.remove('hidden');
       document.getElementById('logout-popup').style.display = 'none';
       renderTiles(defaultTiles);
     }
 
     window.onload = function () {
-      const cachedUser = sessionStorage.getItem('user');
+      const cachedUser = localStorage.getItem('user') || sessionStorage.getItem('user');
       if (cachedUser) {
         const user = JSON.parse(cachedUser);
         showUserUI(user.name);
