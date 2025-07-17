@@ -88,15 +88,14 @@
   <div id="upload-controls" class="absolute top-4 left-4 z-50 flex gap-4 hidden">
     <input type="file" id="tileFileInput" accept="application/json" class="hidden">
     <button onclick="document.getElementById('tileFileInput').click()" class="icon-button" title="Загрузить JSON">
-  <svg class="w-6 h-6 square" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <rect x="4" y="4" width="16" height="16" rx="2" stroke-width="2" />
-  </svg>
+  <svg class="w-6 h-6 square plus" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor">
+  <rect x="4" y="4" width="16" height="16" rx="2" stroke-width="2" />
+</svg>
 </button>
     
     <button onclick="resetCustomTiles()" class="icon-button" title="Очистить">
-      <svg class="w-6 h-6 ring" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <svg class="w-6 h-6 ring minus" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
   <circle cx="12" cy="12" r="10" stroke-width="2" />
-  <circle cx="12" cy="12" r="6" fill="white" />
 </svg>
     </button>
   </div>
@@ -104,7 +103,7 @@
   <div id="g_id_signin" class="absolute top-4 right-28"></div>
 
   <main class="flex-grow flex flex-col items-center pt-[10vh] px-4">
-    <h1 id="gradient-title" class="text-4xl font-bold text-center mb-[10vh] text-gray-800 cursor-pointer" onmouseenter="document.getElementById('studio-part').classList.add('gradient'); localStorage.setItem('studioGradient', 'true');" >
+    <h1 id="gradient-title" class="text-4xl font-bold text-center mb-[10vh] text-gray-800 cursor-pointer" onmouseenter="document.getElementById('studio-part').classList.add('gradient'); localStorage.setItem('studioGradient', 'true');">
   Sasha Minsker <span id="studio-part">Studio</span>
 </h1>
     <div id="tile-container" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 w-full max-w-screen-lg mb-[20vh] pb-[20vh]"></div>
@@ -112,7 +111,7 @@
 
   <footer class="w-full relative py-4 text-sm text-gray-500">
   <div class="text-center">&copy; 2025 Sasha Minsker Studio</div>
-  <div class="absolute right-4 bottom-2">v 0.29</div>
+  <div class="absolute right-4 bottom-2">v 0.36</div>
 </footer>
 
   <script>
