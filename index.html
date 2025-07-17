@@ -1,4 +1,4 @@
-<!-- Version: 0.59 -->
+<!-- Version: 0.61 -->
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -86,17 +86,17 @@
 
   <div id="upload-controls" class="absolute top-4 left-4 z-50 flex gap-4 hidden">
     <input type="file" id="tileFileInput" accept="application/json" class="hidden">
-    <button onclick="document.getElementById('tileFileInput').click()" class="icon-button" title="Загрузить JSON">
+    <button onclick="document.getElementById('tileFileInput').click()" class="icon-button" title="Загрузить меню">
       <svg class="w-6 h-6 square" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
         <rect x="4" y="4" width="16" height="16" rx="2" stroke-width="2" />
       </svg>
     </button>
-    <button onclick="downloadCustomTiles()" class="icon-button" title="Скачать JSON">
+    <button onclick="downloadCustomTiles()" class="icon-button" title="Сохранить меню">
       <svg class="w-6 h-6 triangle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
         <path d="M12 2 L2 22 H22 Z" />
       </svg>
     </button>
-    <button onclick="resetCustomTiles()" class="icon-button" title="Очистить">
+    <button onclick="resetCustomTiles()" class="icon-button" title="Очистить меню">
       <svg class="w-5 h-5 circle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
         <circle cx="12" cy="12" r="10" stroke="#444" stroke-width="2" fill="none"/>
       </svg>
@@ -106,7 +106,7 @@
   <div id="g_id_signin" class="absolute top-4 right-28"></div>
 
   <main class="flex-grow flex flex-col items-center pt-[10vh] px-4">
-    <h1 id="gradient-title" class="text-4xl font-bold text-center mb-[10vh] text-gray-800 cursor-pointer">
+    <h1 id="gradient-title" class="text-4xl font-bold text-center mb-[10vh] text-gray-800 cursor-default">
       Sasha Minsker <span id="studio-part">Studio</span>
     </h1>
     <div id="tile-container" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 w-full max-w-screen-lg mb-[20vh] pb-[20vh]"></div>
@@ -114,7 +114,7 @@
 
   <footer class="w-full relative py-4 text-sm text-gray-500">
     <div class="text-center">&copy; 2025 Sasha Minsker Studio</div>
-    <div class="absolute right-4 bottom-2">v 0.60</div>
+    <div class="absolute right-4 bottom-2">v 0.61</div>
   </footer>
 
   <script>
@@ -224,17 +224,16 @@
         showTiles(defaultTiles);
       }
 
-if (isLoggedIn) {
-  const userBlock = document.getElementById('user-name');
-  const userPic = localStorage.getItem('userPicture');
-  if (userPic) {
-    userBlock.innerHTML = `<img src="${userPic}" alt="user" class="rounded-full w-10 h-10">`;
-    userBlock.classList.remove('hidden');
-  }
-  document.getElementById('g_id_signin').style.display = 'none';
-  document.getElementById('upload-controls').classList.remove('hidden');
-}
-
+      if (isLoggedIn) {
+        const userBlock = document.getElementById('user-name');
+        const userPic = localStorage.getItem('userPicture');
+        if (userPic) {
+          userBlock.innerHTML = `<img src="${userPic}" alt="user" class="rounded-full w-10 h-10">`;
+          userBlock.classList.remove('hidden');
+        }
+        document.getElementById('upload-controls').classList.remove('hidden');
+        document.getElementById('g_id_signin').style.display = 'none';
+      }
 
       window.google.accounts.id.initialize({
         client_id: '1080259086303-5khq1m64o8g4if6r4088mqsa4pj1s57o.apps.googleusercontent.com',
@@ -252,11 +251,11 @@ if (isLoggedIn) {
       const picture = decoded.picture;
       isLoggedIn = true;
       localStorage.setItem('isLoggedIn', 'true');
+      localStorage.setItem('userPicture', picture);
 
       const userBlock = document.getElementById('user-name');
       userBlock.innerHTML = `<img src="${picture}" alt="user" class="rounded-full w-10 h-10">`;
       userBlock.classList.remove('hidden');
-      localStorage.setItem('userPicture', picture);
       document.getElementById('g_id_signin').style.display = 'none';
       document.getElementById('upload-controls').classList.remove('hidden');
 
