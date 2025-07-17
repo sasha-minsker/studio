@@ -1,4 +1,4 @@
-<!-- Version: 0.64 -->
+<!-- Version: 0.65 -->
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -70,14 +70,16 @@
       fill: #6aaed6;
       stroke: #6aaed6;
     }
-    .icon-button:hover svg.circle {
-      fill: #f88fa6;
-      stroke: #f88fa6;
-    }
-    .icon-button:hover svg.triangle {
-      fill: #90e0ef;
-      stroke: #90e0ef;
-    }
+.icon-button:hover svg.circle {
+  fill: none;
+  stroke: #e57373; /* малиново-красный */
+  box-shadow: 0 0 6px rgba(229, 115, 115, 0.6);
+}
+.icon-button:hover svg.triangle {
+  fill: #90ee90; /* светло-зелёный */
+  stroke: #90ee90;
+}
+
   </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -93,7 +95,7 @@
     </button>
     <button onclick="downloadCustomTiles()" class="icon-button" title="Скачать JSON">
       <svg class="w-5 h-5 triangle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M12 2 L2 22 H22 Z" />
+        <path d="M12 22 L2 2 H22 Z" />
       </svg>
     </button>
     <button onclick="resetCustomTiles()" class="icon-button" title="Очистить">
@@ -114,7 +116,7 @@
 
   <footer class="w-full relative py-4 text-sm text-gray-500">
     <div class="text-center">&copy; 2025 Sasha Minsker Studio</div>
-    <div class="absolute right-4 bottom-2">v 0.64</div>
+    <div class="absolute right-4 bottom-2">v 0.65</div>
   </footer>
 
   <script>
